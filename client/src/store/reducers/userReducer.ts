@@ -13,7 +13,7 @@ const userReducer = createSlice({
     extraReducers: (builder) => {
         builder
         .addCase(getAllUser.pending, () => {
-            console.log("Hoàn thành");
+            console.log("...loading");
             
         })
         .addCase(getAllUser.fulfilled, (state, action) => {

@@ -16,6 +16,7 @@ export interface UserType{
     email: string,
     password: string,
     role: "USER" | "ADMIN",
+    status: boolean
 }
 
 export interface Warning{

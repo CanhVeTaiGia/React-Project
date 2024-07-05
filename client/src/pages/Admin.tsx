@@ -3,7 +3,6 @@ import { AdminNavbar } from "../components/Navbar";
 
 const Admin: React.FC = () => {
   
-  
   return (
     <>
       <div className="w-[100%] bg-[#eee] flex">
