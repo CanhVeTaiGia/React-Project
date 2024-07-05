@@ -5,6 +5,7 @@ import { baseUrl } from "../baseAPI/baseURL";
 import bcrypt from "bcryptjs-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
+import Admin from "./Admin";
 
 const Login: React.FC = () => {
   const [showPass, setShowPass] = useState<boolean>(false);

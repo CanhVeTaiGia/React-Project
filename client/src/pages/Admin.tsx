@@ -1,6 +1,7 @@
-import { useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { AdminNavbar } from "../components/Navbar";
 import { useState } from "react";
+import UserManager from "../components/UsersManager";
 
 const Admin: React.FC = () => {
   const [currentUserId, setCurrentUserId] = useState<number | undefined>(() => {
@@ -13,7 +14,9 @@ const Admin: React.FC = () => {
         <AdminNavbar
           id={1}
         ></AdminNavbar>
-        <div className="w-[100%] h-[100px] p-[20px]"></div>
+        <div className="w-[100%] h-[100px] p-[20px]">
+          <Outlet></Outlet>
+        </div>
       </div>
     </>
   );
