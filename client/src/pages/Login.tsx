@@ -3,21 +3,15 @@ import { UserType, Warning } from "../interface/interface";
 import { FormEvent, useState } from "react";
 import { baseUrl } from "../baseAPI/baseURL";
 import bcrypt from "bcryptjs-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
 
 const Login: React.FC = () => {
-  const [currentUserId, setCurrentUserId] = useState<number | undefined>(() => {
-    const userId = localStorage.getItem("userId");
-    if (userId) return parseInt(userId);
-  });
+  const [showPass, setShowPass] = useState<boolean>(false);
 
-  const [user, setUser] = useState<UserType>({
-    id: 0,
-    firstName: "",
-    lastName: "",
+  const [user, setUser] = useState<{ email: string; password: string }>({
     email: "",
-    status: true,
     password: "",
-    role: "USER",
   });
 
   const [warning, setWarning] = useState<Warning>({
@@ -35,13 +29,8 @@ const Login: React.FC = () => {
 
   const resetInput = () => {
     return setUser({
-      id: 0,
-      firstName: "",
-      lastName: "",
       email: "",
       password: "",
-      status: true,
-      role: "USER",
     });
   };
 
@@ -87,8 +76,9 @@ const Login: React.FC = () => {
       if (response.data[0].email === user.email && decryptedPass) {
         const newUser = {
           ...response.data[0],
-          password: decryptedPass,
+          password: bcrypt.hashSync(user.password, 10),
         };
+        localStorage.setItem("userId", response.data[0].id);
         navigate("/", {
           state: newUser,
         });
@@ -142,9 +132,22 @@ const Login: React.FC = () => {
               value={user.password}
               onChange={handleChange}
               name="password"
-              type="password"
+              type={showPass ? "text" : "password"}
               className="pl-[10px] outline-none mt-[10px] w-[100%] h-[40px] rounded-[5px] border-[1px]"
             />
+            {showPass ? (
+              <FontAwesomeIcon
+                onClick={() => setShowPass(false)}
+                className="absolute right-[10px] bottom-[15%] cursor-pointer"
+                icon={faEye}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faEyeSlash}
+                onClick={() => setShowPass(true)}
+                className="absolute right-[10px] bottom-[15%] cursor-pointer"
+              />
+            )}
             {warning.password ? (
               <p className="absolute text-[14px] text-red-500">
                 Mật khẩu không được để trống
