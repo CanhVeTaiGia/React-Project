@@ -10,8 +10,8 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { UserType } from "../interface/interface";
-import { baseUrl } from "../baseAPI/baseURL";
+import { UserType } from "../../interface/interface";
+import { baseUrl } from "../../baseAPI/baseURL";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -22,8 +22,8 @@ export const AdminNavbar: React.FC<Props> = ({ id }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("userId");
-    navigate('/login')
-  }
+    navigate("/login");
+  };
 
   useEffect(() => {
     const getUser = async () => {
@@ -54,7 +54,10 @@ export const AdminNavbar: React.FC<Props> = ({ id }) => {
             <FontAwesomeIcon icon={faHouse} />
             <p>Trang chủ</p>
           </div>
-          <div onClick={() => navigate('usermanager')} className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]">
+          <div
+            onClick={() => navigate("usermanager")}
+            className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]"
+          >
             <FontAwesomeIcon icon={faUser} />
             <p>Người dùng</p>
           </div>
@@ -68,7 +71,10 @@ export const AdminNavbar: React.FC<Props> = ({ id }) => {
           </div>
         </div>
 
-        <div onClick={handleLogout} className="p-[10px] pl-[20px] mb-[10px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]">
+        <div
+          onClick={handleLogout}
+          className="p-[10px] pl-[20px] mb-[10px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]"
+        >
           <FontAwesomeIcon icon={faRightFromBracket} />
           <p>Đăng xuất</p>
         </div>

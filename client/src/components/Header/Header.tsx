@@ -1,17 +1,20 @@
 import { faList, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const UserManagerHeader: React.FC = () => {
+interface Props{
+  showModal: boolean,
+  changeModal: () => void,
+  typeShowModal: "ADD"
+}
+export const UserManagerHeader: React.FC<Props> = ({showModal, typeShowModal, changeModal}) => {
   return (
     <>
       <div className="w-[100%] h-[100px] bg-[#fff] rounded-[5px] px-[20px] p-[10px] items-center justify-between flex">
-        <h2 className="text-[24px] font-[600]">Quản lý người dùng</h2>
-
         <div className="w-[300px] h-[100%] flex items-center">
-          <select className="w-[120px] rounded-[5px] border-[1px]" >
-            <option hidden value="">Sắp xếp</option>
+          <select className="w-[140px] rounded-[5px] border-[1px]" >
+            <option hidden value="">Hiển thị bản ghi</option>
             <option value="">Theo tên</option>
-            <option value="">Theo</option>
+            <option value="">Theo </option>
           </select>
         </div>
 
@@ -19,10 +22,14 @@ export const UserManagerHeader: React.FC = () => {
           <input
             type="text"
             placeholder="Tìm kiếm"
-            className="w-[100%] pl-[30px] h-[60%] border-[1px] rounded-[5px]"
+            className="w-[100%] outline-none pl-[30px] h-[60%] border-[1px] rounded-[5px]"
           />
           <FontAwesomeIcon className="absolute text-[13px] top-[25px] outline-none text-[#aaa] left-[10px]" icon={faMagnifyingGlass} />
         </div>
+
+        <button onClick={changeModal} className="h-[50%] rounded-[3px] p-[10px] text-white bg-[#08f]">
+          Thêm người dùng
+        </button>
       </div>
     </>
   );

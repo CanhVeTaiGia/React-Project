@@ -1,11 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { UserType, Warning } from "../interface/interface";
+import { UserType, Warning } from "../../interface/interface";
 import { FormEvent, useState } from "react";
-import { baseUrl } from "../baseAPI/baseURL";
+import { baseUrl } from "../../baseAPI/baseURL";
 import bcrypt from "bcryptjs-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
-import Admin from "./Admin";
+import Admin from "../admin/Admin";
 
 const Login: React.FC = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
