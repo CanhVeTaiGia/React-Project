@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Admin from "./pages/admin/Admin";
 import Login from "./pages/login/Login";
-import UserManager from "./components/Admin/UsersManager";
+import UserManager from "./components/Admin/User/UsersManager";
 
 const App: React.FC = () => {
   return (

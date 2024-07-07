@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { UserType } from "../../interface/interface";
-import { changeUserStatus } from "../../services/user.service";
+import { UserType } from "../../../interface/interface";
+import { changeUserStatus } from "../../../services/user.service";
 import {
   faCircleUser,
   faLock,
