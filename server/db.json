@@ -14,7 +14,7 @@
       "firstName": "Nguyễn",
       "lastName": "Đắc Sơn",
       "email": "a@gmail.com",
-      "status": false,
+      "status": true,
       "password": "$2a$10$hb/ESB.2MljP1N1kmOa.5ObrZS8p5bnzMX5VMKfFvVR/iARllfF.m",
       "role": "USER"
     },
@@ -38,12 +38,12 @@
     },
     {
       "id": 5,
-      "firstName": "Hà",
-      "lastName": "Vũ",
-      "email": "c@gmail.com",
-      "password": "$2a$10$kp74XWkYt0IJlm/uYPInceoOLxz9dIs7bdwrpyMmhBA2S2VLyh2JG",
-      "role": "ADMIN",
-      "status": true
+      "firstName": "Hoàng",
+      "lastName": "Long",
+      "email": "f@gmail.com",
+      "status": true,
+      "password": "$2a$10$2X95fKNi13A.UwrjzXfqquNycrW61H9bdItqs3EMlGVRASOvQrXcK",
+      "role": "USER"
     }
   ],
   "history": [],

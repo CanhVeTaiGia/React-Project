@@ -3,6 +3,7 @@ import {
   faBookOpen,
   faCircleQuestion,
   faCircleUser,
+  faClockRotateLeft,
   faFile,
   faHouse,
   faList,
@@ -62,10 +63,13 @@ export const AdminNavbar: React.FC<Props> = ({ id }) => {
             <p>Người dùng</p>
           </div>
           <div className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]">
-            <FontAwesomeIcon icon={faList} />
-            <p>Khóa học</p>
+            <FontAwesomeIcon icon={faClockRotateLeft} />
+            <p>Lịch sử</p>
           </div>
-          <div className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]">
+          <div
+            onClick={() => navigate("coursemanager")}
+            className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]"
+          >
             <FontAwesomeIcon icon={faList} />
             <p>Khóa học</p>
           </div>

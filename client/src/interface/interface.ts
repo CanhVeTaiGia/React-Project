@@ -8,6 +8,27 @@ export interface HistoryType{
     examId: number,
 }
 
+export interface Course{
+    id: number,
+    title: string,
+    description: string,
+}
+
+export interface Exam{
+    id: number,
+    title: string,
+    description: string,
+    duration: number,
+    examSubjectId: number
+}
+
+export interface UserAnswer{
+    id: number,
+    userId: number,
+    exampId: number,
+    score: number
+}
+
 export interface UserType{
     id: number,
     firstName: string,

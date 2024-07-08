@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { UserType } from "../../interface/interface";
 import { useDispatch } from "react-redux";
-import bcrypt from 'bcryptjs-react'
+import bcrypt from "bcryptjs-react";
 import { addUser, findEmail } from "../../services/user.service";
+import { baseUrl } from "../../baseAPI/baseURL";
 
 interface Props {
   showModal: boolean;
@@ -61,26 +62,34 @@ export const AddAndEditUser: React.FC<Props> = ({
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    
     e.preventDefault();
-    if (!warning.email || !warning.firstName || !warning.lastName || !warning.password) {
+    let response = await baseUrl.get(`users?email=${user.email}`);
+    if (
+      warning.email ||
+      warning.firstName ||
+      warning.lastName ||
+      warning.password
+    ) {
       return;
     }
-    if (user.email === "" || user.password === "" || user.firstName === "" || user.lastName === "") {
+    if (
+      user.email === "" ||
+      user.password === "" ||
+      user.firstName === "" ||
+      user.password === ""
+    ) {
       return;
     }
-    const response = await dispatch(findEmail(user.email));
-  
-    if (response.payload.length > 0) {
-      setIsExisted(true);
+    if (response.data.length > 0) {
+      return setIsExisted(true);
     } else {
-      const cryptedPass = bcrypt.hashSync(user.password, 10);
-      dispatch(addUser({ ...user, password: cryptedPass }));
+      let cryptedPass = bcrypt.hashSync(user.password, 10);
+      baseUrl.post("users", { ...user, password: cryptedPass });
+      changeModal();
       resetInput();
-      changeModal()
     }
   };
-  
+
   return (
     <>
       <div className="h-[100vh] top-0 left-0 absolute z-50 w-[100%] flex justify-center items-center">
@@ -170,4 +179,39 @@ export const AddAndEditUser: React.FC<Props> = ({
       </div>
     </>
   );
+};
+
+interface ExistedUserProps {
+  hideModal: () => void;
+}
+export const ExistedUser: React.FC<ExistedUserProps> = ({ hideModal }) => {
+  return (
+    <>
+      <div className="absolute z-[1000] w-[100%] flex items-center justify-center h-[100vh] bg-[#eeeeeead]">
+        <div className="w-[500px] bg-[#fff] px-[40px] p-[20px] rounded-[5px] shadow-md">
+          <h2 className="text-[20px] mb-[20px] border-b-[1px] py-[10px]">
+            Người dùng đã tồn tại
+          </h2>
+          <div className="flex justify-end">
+            <button
+              onClick={() => hideModal()}
+              className="h-[40px] w-[80px] text-white rounded-[3px] bg-[#08f]"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export const Lock: React.FC = () => {
+  return <>
+    <div className="w-[100%] absolute h-[100vh] top-0 left-0 ">
+      <div className="w-[500px] bg-white p-[20px]">
+        
+      </div>
+    </div>
+  </>;
 };

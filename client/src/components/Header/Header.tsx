@@ -61,3 +61,11 @@ export const Header: React.FC = () => {
     </>
   );
 };
+
+export const CourseHeader: React.FC = () => {
+  return <>
+    <div className="w-[100%] h-[100px] bg-[#fff] rounded-[5px] px-[20px] p-[10px] items-center justify-between flex">
+      
+    </div>
+  </>;
+};

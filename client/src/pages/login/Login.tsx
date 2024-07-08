@@ -75,14 +75,9 @@ const Login: React.FC = () => {
         return;
       }
       if (response.data[0].email === user.email && decryptedPass) {
-        const newUser = {
-          ...response.data[0],
-          password: bcrypt.hashSync(user.password, 10),
-        };
+        
         localStorage.setItem("userId", response.data[0].id);
-        navigate("/", {
-          state: newUser,
-        });
+        navigate("/");
       }
     } else {
       return setWrong({ ...wrong, email: true, password: true });

@@ -9,11 +9,13 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 interface Props {
   user: UserType;
 }
 export const User: React.FC<Props> = ({ user }) => {
+  const [lock, setLock] = useState<boolean>(false);
   const dispatch = useDispatch();
   return (
     <>
@@ -33,7 +35,7 @@ export const User: React.FC<Props> = ({ user }) => {
         <td className="p-[10px] bg-white border-y-[1px]">
           <button
             className={`p-[5px] w-[150px] text-white rounded-[3px] ${
-              user.status ? "bg-[#1f4]" : "bg-[#f00]"
+              user.status ? "bg-[#3f3]" : "bg-[#f00]"
             } `}
           >
             {user.status ? "Đang hoạt động" : "Ngừng hoạt động"}
@@ -53,7 +55,7 @@ export const User: React.FC<Props> = ({ user }) => {
                 dispatch(changeUserStatus({ id: user.id, status: user.status }))
               }
               icon={faLockOpen}
-              className="mr-[25px] cursor-pointer text-[20px] text-[#0f0]"
+              className="mr-[25px] cursor-pointer text-[20px] text-[#3f3]"
             />
           ) : (
             <FontAwesomeIcon
@@ -67,10 +69,6 @@ export const User: React.FC<Props> = ({ user }) => {
           <FontAwesomeIcon
             className="mr-[30px] cursor-pointer text-[#f80]  text-[20px]"
             icon={faPenToSquare}
-          />
-          <FontAwesomeIcon
-            icon={faTrash}
-            className="cursor-pointer text-[#f00] text-[20px]"
           />
         </td>
       </tr>
