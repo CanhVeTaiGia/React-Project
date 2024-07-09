@@ -2,6 +2,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import {
   CourseType,
   CourseWarning,
+  ExamSubjectType,
   RootType,
   UserType,
   Warning,
@@ -14,7 +15,12 @@ import {
   findEmail,
 } from "../../services/user.service";
 import { baseUrl } from "../../baseAPI/baseURL";
-import { addCourse, getCourseById } from "../../services/course.service";
+import {
+  addCourse,
+  editCourse,
+  getAllCourse,
+  getCourseById,
+} from "../../services/course.service";
 
 interface Props {
   showModal: boolean;
@@ -237,28 +243,17 @@ interface AddOrEditCourseProps {
   setCourseToEditOrAdd: (id: number) => void;
   hideAddOrEditCourse: () => void;
 }
+
 export const AddOrEditCourse: React.FC<AddOrEditCourseProps> = ({
   courseEdit,
   hideAddOrEditCourse,
 }) => {
-  const data: any = useSelector((state: RootType) => {
-    return state.courses;
+  const data: any = useSelector((state: RootType) => state.courses);
+  const [course, setCourse] = useState<CourseType>({
+    id: 0,
+    title: "",
+    description: "",
   });
-
-  const [course, setCourse] = useState<CourseType>(() => {
-    const course = {
-      id: 0,
-      title: "",
-      description: "",
-    };
-    if (courseEdit.id) {
-      return {
-        ...data.editCourse,
-      };
-    }
-    return course;
-  });
-
   const [warning, setWarning] = useState<CourseWarning>({
     title: false,
     description: false,
@@ -266,16 +261,29 @@ export const AddOrEditCourse: React.FC<AddOrEditCourseProps> = ({
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (courseEdit.id !== 0) {
+      dispatch(getCourseById(courseEdit.id));
+    }
+  }, [courseEdit.id, dispatch]);
+
+  useEffect(() => {
+    if (courseEdit.id !== 0 && data.editCourse) {
+      setCourse(data.editCourse);
+    }
+  }, [courseEdit.id, data.editCourse]);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (courseEdit.id) {
-    } else {
-      if (warning.title || warning.description) {
-        return;
-      } else {
-        dispatch(addCourse(course));
-      }
+    if (warning.title || warning.description) {
+      return;
     }
+    if (courseEdit.id) {
+      dispatch(editCourse(course));
+    } else {
+      dispatch(addCourse(course));
+    }
+    hideAddOrEditCourse();
   };
 
   const handleChange = (
@@ -289,51 +297,135 @@ export const AddOrEditCourse: React.FC<AddOrEditCourseProps> = ({
     setCourse((prev) => ({ ...prev, [name]: value }));
   };
 
-  // console.log(course);
-  
+  return (
+    <div className="w-[100%] absolute h-[100vh] top-0 left-0 flex justify-center items-center">
+      <form
+        onSubmit={handleSubmit}
+        className="w-[500px] p-[20px] shadow-lg border-[1px] bg-white rounded-[5px]"
+      >
+        <div className="flex justify-between mb-[10px]">
+          <h2>{courseEdit.id === 0 ? "Thêm" : "Sửa"} Khóa Thi</h2>
+          <p onClick={hideAddOrEditCourse} className="cursor-pointer">
+            X
+          </p>
+        </div>
+        <div className="w-[100%] h-[35px] mb-[20px]">
+          <input
+            onChange={handleChange}
+            className="w-[100%] outline-none p-[5px] pl-[10px] border-[1px] rounded-[3px]"
+            placeholder="Tiêu đề"
+            value={course.title}
+            type="text"
+            name="title"
+          />
+        </div>
+        <div className="w-[100%] h-[150px] mb-[20px]">
+          <textarea
+            className="w-[100%] p-[5px] h-[100%] outline-none pl-[10px] border-[1px] resize-none rounded-[3px]"
+            placeholder="Mô tả"
+            value={course.description}
+            name="description"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="w-[100%] h-[35px] mb-[20px] flex justify-center">
+          <button className="w-[120px] h-[100%] text-white rounded-[3px] bg-blue-500">
+            {courseEdit.id ? "Sửa" : "Thêm"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+interface AddAndEditExamSubjectProps {
+  examSubjectId: number;
+  hideAddOrEdit: () => void;
+}
+export const AddAndEditExamSubject: React.FC<AddAndEditExamSubjectProps> = ({
+  examSubjectId,
+  hideAddOrEdit,
+}) => {
+  const [examSubject, setExamSubject] = useState<ExamSubjectType>({
+    id: 0,
+    title: "",
+    description: "",
+    courseId: 0,
+  });
+
+  const data: any = useSelector((state: RootType) => {
+    return state.courses;
+  });
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
 
   useEffect(() => {
-    if (courseEdit.id === 0) {
-      return;
-    }
-    dispatch(getCourseById(courseEdit.id));
+    dispatch(getAllCourse());
   }, []);
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setExamSubject({ ...examSubject, [name]: value });
+  };
   return (
     <>
-      <div className="w-[100%] absolute h-[100vh] top-0 left-0 flex justify-center items-center">
+      <div className="w-[100%] z-[200] h-[100vh] absolute top-0 left-0 flex justify-center items-center">
         <form
+          className="w-[500px] rounded-[5px] shadow-md bg-white p-[20px]"
           onSubmit={handleSubmit}
-          className="w-[500px] p-[20px] shadow-lg border-[1px] bg-white rounded-[5px]"
         >
-          <div className="flex justify-between mb-[10px]">
-            <h2>{courseEdit.id === 0 ? "Thêm" : "Sửa"} Khóa Học</h2>
-            <p onClick={hideAddOrEditCourse} className="cursor-pointer">
+          <div className="flex justify-between">
+            <h2 className="text-[20px]">
+              {examSubjectId ? "Sửa" : "Thêm"} Môn Thi
+            </h2>
+            <p onClick={hideAddOrEdit} className="cursor-pointer">
               X
             </p>
           </div>
-          <div className="w-[100%] h-[35px] mb-[20px]">
+          <div className="w-[100%] mt-[20px] h-[30px]">
             <input
               onChange={handleChange}
-              className="w-[100%] outline-none p-[5px] pl-[10px] border-[1px] rounded-[3px]"
-              placeholder="Tiêu đề"
-              value={course.title || ""}
-              type="text"
               name="title"
+              placeholder="Tiêu đề"
+              type="text"
+              className="outline-none pl-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px]"
             />
           </div>
-          <div className="w-[100%] h-[150px] mb-[20px]">
+          <div className="w-[100%] mt-[20px] h-[120px]">
             <textarea
-              className="w-[100%] p-[5px] h-[100%] outline-none pl-[10px] border-[1px] resize-none rounded-[3px]"
-              placeholder="Mô tả"
-              value={course.description || ""}
-              name="description"
               onChange={handleChange}
+              name="description"
+              placeholder="Tiêu đề"
+              className="outline-none p-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px] resize-none"
             />
           </div>
-          <div className="w-[100%] h-[35px] mb-[20px] flex justify-center">
-            <button className="w-[120px] h-[100%] rounded-[3px] bg-blue-500">
-              {courseEdit.id ? "Sửa" : "Thêm"}
-            </button>
+          <div className="w-[100%] flex justify-center mt-[20px] h-[30px]">
+            <select
+              onChange={handleChange}
+              name="courseId"
+              className="w-[80px] rounded-[3px] text-[14px] border-[1px]"
+            >
+              <option hidden>Khóa thi</option>
+              {data.courses.map((item: any) => {
+                return item.id === examSubjectId ? (
+                  <option defaultChecked key={item.id} value={item.id}>
+                    {item.title}
+                  </option>
+                ) : (
+                  <option key={item.id} value={item.id}>
+                    {item.title}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </form>
       </div>

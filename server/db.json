@@ -9,20 +9,27 @@
       "status": true
     }
   ],
-  "history": [],
   "courses": [
     {
       "id": 1,
-      "title": "Lớp 12",
-      "description": "Chill"
+      "title": "Khóa luyện thi đại học",
+      "description": "Khóa luyện thi cho học sinh chuẩn bị thi đại học"
     },
     {
       "id": 2,
-      "title": "Lớp 11",
-      "description": "Hallo"
+      "title": "Khóa luyện thi THPT",
+      "description": "Khóa học dành cho học sinh lớp 10, 11, 12"
     }
   ],
-  "lessons": [],
-  "exam": [],
-  "question": []
+  "examSubjects": [
+    {
+      "id": 1,
+      "title": "Môn Đại Số",
+      "description": "Luyện thi đại học Đại số",
+      "courseId": 1
+    }
+  ],
+  "exams": [],
+  "questions": [],
+  "userAnswers": []
 }

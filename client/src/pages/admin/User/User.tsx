@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { Lock } from "../../Modal/Modal";
+import { Lock } from "../../../components/Modal/Modal";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 interface Props {

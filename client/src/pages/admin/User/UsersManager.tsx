@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { UserManagerHeader } from "../../Header/Header";
+import { UserManagerHeader } from "../../../components/Header/Header";
 import User from "./User";
 import { RootType, UserType } from "../../../interface/interface";
 import { useEffect, useState } from "react";
 import { getAllUser } from "../../../services/user.service";
-import { AddAndEditUser } from "../../Modal/Modal";
-import { UserManagerFooter } from "../../Footer/Footer";
+import { AddAndEditUser } from "../../../components/Modal/Modal";
+import { UserManagerFooter } from "../../../components/Footer/Footer";
 
 const UserManager: React.FC = () => {
   const data: any = useSelector((state: RootType) => {

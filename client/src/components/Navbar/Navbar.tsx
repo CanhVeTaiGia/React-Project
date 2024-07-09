@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faBookOpen,
+  faCircleQuestion,
   faCircleUser,
   faClockRotateLeft,
   faHouse,
@@ -28,7 +30,6 @@ export const AdminNavbar: React.FC<Props> = ({ id }) => {
   const adminUser = data.adminProfile;
 
   // console.log(adminUser);
-  
 
   const dispatch = useDispatch();
 
@@ -50,8 +51,9 @@ export const AdminNavbar: React.FC<Props> = ({ id }) => {
             </p>
           </div>
           <div
-          onClick={() => navigate('/admin')}
-          className="p-[10px] pl-[20px] mt-[50px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]">
+            onClick={() => navigate("/admin")}
+            className="p-[10px] pl-[20px] mt-[50px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]"
+          >
             <FontAwesomeIcon icon={faHouse} />
             <p>Trang chủ</p>
           </div>
@@ -62,16 +64,31 @@ export const AdminNavbar: React.FC<Props> = ({ id }) => {
             <FontAwesomeIcon icon={faUser} />
             <p>Người dùng</p>
           </div>
-          <div className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]">
-            <FontAwesomeIcon icon={faClockRotateLeft} />
-            <p>Lịch sử</p>
-          </div>
+
           <div
             onClick={() => navigate("coursemanager")}
             className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]"
           >
             <FontAwesomeIcon icon={faList} />
-            <p>Khóa học</p>
+            <p>Khóa thi</p>
+          </div>
+          <div
+            onClick={() => navigate("examSubject")}
+            className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]"
+          >
+            <FontAwesomeIcon icon={faBookOpen} />
+            <p>Môn thi</p>
+          </div>
+          <div
+            onClick={() => navigate("coursemanager")}
+            className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]"
+          >
+            <FontAwesomeIcon icon={faCircleQuestion} />
+            <p>Đề thi</p>
+          </div>
+          <div className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]">
+            <FontAwesomeIcon icon={faClockRotateLeft} />
+            <p>Lịch sử</p>
           </div>
         </div>
 

@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { CourseHeader } from "../../Header/Header";
+import { CourseHeader } from "../../../components/Header/Header";
 import Course from "./Course";
 import { CourseType, RootType } from "../../../interface/interface";
 import { useEffect, useState } from "react";
 import { getAllCourse } from "../../../services/course.service";
-import { AddOrEditCourse } from "../../Modal/Modal";
+import { AddOrEditCourse } from "../../../components/Modal/Modal";
 
 const CourseManager: React.FC = () => {
   const data: any = useSelector((state: RootType) => {
@@ -42,6 +42,7 @@ const CourseManager: React.FC = () => {
   useEffect(() => {
     dispatch(getAllCourse());
   }, []);
+
   return (
     <>
       {showAddOrEditCourse ? (
@@ -65,7 +66,7 @@ const CourseManager: React.FC = () => {
               <th className="text-start border-b-[1px] border-[#bbb]  p-[10px] w-[20%]">
                 Tiêu đề
               </th>
-              <th className="text-center border-b-[1px] border-[#bbb]  p-[10px] w-[60%]">
+              <th className="text-start border-b-[1px] border-[#bbb]  p-[10px] w-[60%]">
                 Nội dung
               </th>
               <th className="border-[#bbb] border-b-[1px] border-r-[1px]">

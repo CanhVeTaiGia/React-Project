@@ -22,6 +22,13 @@ export interface ExamType{
     examSubjectId: number
 }
 
+export interface ExamSubjectType{
+    id: number,
+    title: string,
+    description: string,
+    courseId: number
+}
+
 export interface UserAnswerType{
     id: number,
     userId: number,
