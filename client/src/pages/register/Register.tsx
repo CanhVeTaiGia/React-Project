@@ -10,16 +10,14 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
 
   const [warning, setWarning] = useState<Warning>({
-    firstName: false,
-    lastName: false,
+    name: false,
     email: false,
     password: false,
   });
 
   const [user, setUser] = useState<UserType>({
     id: 0,
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     status: true,
     password: "",
@@ -29,8 +27,7 @@ const Register: React.FC = () => {
   const resetInput = () => {
     return setUser({
       id: 0,
-      firstName: "",
-      lastName: "",
+      name: "",
       email: "",
       status: true,
       password: "",
@@ -51,20 +48,10 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let response = await baseUrl.get(`users?email=${user.email}`);
-    if (
-      warning.email ||
-      warning.firstName ||
-      warning.lastName ||
-      warning.password
-    ) {
+    if (warning.email || warning.name || warning.password) {
       return;
     }
-    if (
-      user.email === "" ||
-      user.password === "" ||
-      user.firstName === "" ||
-      user.password === ""
-    ) {
+    if (user.email === "" || user.password === "" || user.name === "") {
       return;
     }
     if (response.data.length > 0) {
@@ -92,30 +79,15 @@ const Register: React.FC = () => {
         <form onSubmit={handleSubmit} className="w-[60%] h-[100vh] p-[40px]">
           <h2 className="font-[600] text-[44px] ">Đăng kí</h2>
           <div className="w-[100%] mt-[50px] flex gap-[20px]">
-            <div className="w-[50%] relative">
-              <label className="outline-none text-[24px]">Họ</label>
-              <input
-                name="firstName"
-                // value={}
-                onChange={handleChange}
-                className="outline-none pl-[10px] w-[100%] h-[40px] border-[1px] mt-[10px] rounded-[4px]"
-                type="text"
-              />
-              {warning.firstName ? (
-                <p className="text-[#f00] absolute">Họ không được để trống</p>
-              ) : (
-                ""
-              )}
-            </div>
-            <div className="w-[50%] relative">
+            <div className="w-[100%] relative">
               <label className="text-[24px]">Tên</label>
               <input
-                name="lastName"
+                name="name"
                 onChange={handleChange}
                 className="outline-none w-[100%] h-[40px] border-[1px] mt-[10px] rounded-[4px] pl-[10px]"
                 type="text"
               />
-              {warning.lastName ? (
+              {warning.name ? (
                 <p className="text-[#f00] absolute">Tên không được để trống</p>
               ) : (
                 ""

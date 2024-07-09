@@ -8,13 +8,13 @@ export interface HistoryType{
     examId: number,
 }
 
-export interface Course{
+export interface CourseType{
     id: number,
     title: string,
     description: string,
 }
 
-export interface Exam{
+export interface ExamType{
     id: number,
     title: string,
     description: string,
@@ -22,7 +22,7 @@ export interface Exam{
     examSubjectId: number
 }
 
-export interface UserAnswer{
+export interface UserAnswerType{
     id: number,
     userId: number,
     exampId: number,
@@ -31,8 +31,7 @@ export interface UserAnswer{
 
 export interface UserType{
     id: number,
-    firstName: string,
-    lastName: string,
+    name: string,
     image?: string,
     email: string,
     password: string,
@@ -41,10 +40,15 @@ export interface UserType{
 }
 
 export interface Warning{
-    firstName?: boolean,
-    lastName?: boolean,
+    name?: boolean,
     email: boolean,
     password: boolean,
 }
 
 export type RootType = ReturnType<typeof store.getState>
+
+
+export interface CourseWarning{
+    title: boolean,
+    description: boolean
+}

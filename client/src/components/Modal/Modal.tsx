@@ -1,9 +1,20 @@
-import { useState } from "react";
-import { UserType } from "../../interface/interface";
-import { useDispatch } from "react-redux";
+import { SetStateAction, useEffect, useState } from "react";
+import {
+  CourseType,
+  CourseWarning,
+  RootType,
+  UserType,
+  Warning,
+} from "../../interface/interface";
+import { useDispatch, useSelector } from "react-redux";
 import bcrypt from "bcryptjs-react";
-import { addUser, findEmail } from "../../services/user.service";
+import {
+  addUser,
+  changeUserStatus,
+  findEmail,
+} from "../../services/user.service";
 import { baseUrl } from "../../baseAPI/baseURL";
+import { addCourse, getCourseById } from "../../services/course.service";
 
 interface Props {
   showModal: boolean;
@@ -17,8 +28,7 @@ export const AddAndEditUser: React.FC<Props> = ({
   typeShowModal,
 }) => {
   const [warning, setWarning] = useState({
-    firstName: true,
-    lastName: true,
+    name: true,
     email: true,
     password: true,
   });
@@ -26,8 +36,7 @@ export const AddAndEditUser: React.FC<Props> = ({
   const resetInput = () => {
     return setUser({
       id: 0,
-      firstName: "",
-      lastName: "",
+      name: "",
       email: "",
       status: true,
       password: "",
@@ -41,8 +50,7 @@ export const AddAndEditUser: React.FC<Props> = ({
 
   const [user, setUser] = useState<UserType>({
     id: 0,
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     password: "",
     role: "ADMIN",
@@ -64,27 +72,18 @@ export const AddAndEditUser: React.FC<Props> = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let response = await baseUrl.get(`users?email=${user.email}`);
-    if (
-      warning.email ||
-      warning.firstName ||
-      warning.lastName ||
-      warning.password
-    ) {
+
+    if (!warning.email || !warning.name || !warning.password) {
       return;
     }
-    if (
-      user.email === "" ||
-      user.password === "" ||
-      user.firstName === "" ||
-      user.password === ""
-    ) {
+    if (user.email === "" || user.password === "" || user.name === "") {
       return;
     }
     if (response.data.length > 0) {
       return setIsExisted(true);
     } else {
       let cryptedPass = bcrypt.hashSync(user.password, 10);
-      baseUrl.post("users", { ...user, password: cryptedPass });
+      dispatch(addUser({ ...user, password: cryptedPass }));
       changeModal();
       resetInput();
     }
@@ -98,39 +97,23 @@ export const AddAndEditUser: React.FC<Props> = ({
           className="p-[20px] rounded-[5px] bg-white w-[700px]"
         >
           <div className="flex justify-between">
-            <h1 className="text-[20px]">
-              {typeShowModal === "EDIT" ? "Sửa" : "Thêm"} người dùng
-            </h1>
+            <h1 className="text-[20px]">Thêm người dùng</h1>
             <p onClick={changeModal} className="cursor-pointer text-[20px]">
               X
             </p>
           </div>
-          <div className="w-[100%] relative flex justify-between gap-[10px] mt-[30px] mb-[30px]">
+          <div className="relative mt-[20px]">
             <input
               onChange={handleChange}
-              name="firstName"
-              type="text"
-              placeholder="Họ"
-              className="pl-[10px] outline-none w-[100%] h-[30px] rounded-[3px] border-[1px]"
-            />
-            {warning.firstName ? (
-              ""
-            ) : (
-              <p className="text-[#f00] text-[12px] absolute top-[30px]">
-                Họ không được để trống
-              </p>
-            )}
-            <input
-              onChange={handleChange}
-              name="lastName"
+              name="name"
               type="text"
               placeholder="Tên"
-              className="pl-[10px] outline-none w-[100%] h-[30px] rounded-[3px] border-[1px]"
+              className="p-[10px] outline-none w-[100%] rounded-[3px] mb-[30px] border-[1px]"
             />
-            {warning.lastName ? (
+            {warning.name ? (
               ""
             ) : (
-              <p className="text-[#f00] text-[12px] left-[335px] absolute top-[30px]">
+              <p className="text-[#f00] text-[12px] absolute top-[45px]">
                 Tên không được để trống
               </p>
             )}
@@ -141,12 +124,12 @@ export const AddAndEditUser: React.FC<Props> = ({
               name="email"
               type="text"
               placeholder="Email"
-              className="pl-[10px] outline-none w-[100%] mb-[30px] border-[1px]"
+              className="p-[10px] outline-none w-[100%] rounded-[3px] mb-[30px] border-[1px]"
             />
             {warning.email ? (
               ""
             ) : (
-              <p className="text-[#f00] rounded-[3px] top-[30px] text-[12px] absolute">
+              <p className="text-[#f00] top-[45px] text-[12px] absolute">
                 Email không được để trống
               </p>
             )}
@@ -155,14 +138,14 @@ export const AddAndEditUser: React.FC<Props> = ({
             <input
               onChange={handleChange}
               name="password"
-              type="text"
+              type="password"
               placeholder="Mật khẩu"
-              className="pl-[10px] outline-none w-[100%] rounded-[3px] mb-[30px] border-[1px]"
+              className="p-[10px] outline-none w-[100%] rounded-[3px] mb-[30px] border-[1px]"
             />
             {warning.password ? (
               ""
             ) : (
-              <p className="text-[#f00] rounded-[3px] top-[30px] text-[12px] absolute">
+              <p className="text-[#f00] rounded-[3px] top-[45px] text-[12px] absolute">
                 Mật khẩu không được để trống
               </p>
             )}
@@ -206,12 +189,154 @@ export const ExistedUser: React.FC<ExistedUserProps> = ({ hideModal }) => {
   );
 };
 
-export const Lock: React.FC = () => {
-  return <>
-    <div className="w-[100%] absolute h-[100vh] top-0 left-0 ">
-      <div className="w-[500px] bg-white p-[20px]">
-        
+interface LockProps {
+  hideLock: () => void;
+  user: UserType;
+}
+export const Lock: React.FC<LockProps> = ({ hideLock, user }) => {
+  const dispatch = useDispatch();
+  const handleLock = () => {
+    dispatch(changeUserStatus({ id: user.id, status: user.status }));
+    hideLock();
+  };
+  return (
+    <>
+      <div className="w-[100%] absolute h-[100vh] top-0 left-0 flex justify-center items-center">
+        <div className="w-[500px] bg-white p-[20px] flex flex-col">
+          <div className="flex justify-between py-[10px] border-b-[1px]">
+            <h2>Bạn có chắc muốn khóa tài khoản này?</h2>
+            <p className="cursor-pointer" onClick={hideLock}>
+              X
+            </p>
+          </div>
+          <div className="flex justify-end gap-[20px] mt-[20px]">
+            <button
+              onClick={hideLock}
+              className="h-[30px] w-[120px] rounded-[3px] border-[1px]"
+            >
+              Không
+            </button>
+            <button
+              onClick={handleLock}
+              className="h-[30px] w-[120px] rounded-[3px] text-white bg-[#f00]"
+            >
+              Có
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-  </>;
+    </>
+  );
+};
+
+interface AddOrEditCourseProps {
+  courseEdit: {
+    id: number;
+    type: "add" | "edit";
+  };
+  setCourseToEditOrAdd: (id: number) => void;
+  hideAddOrEditCourse: () => void;
+}
+export const AddOrEditCourse: React.FC<AddOrEditCourseProps> = ({
+  courseEdit,
+  hideAddOrEditCourse,
+}) => {
+  const data: any = useSelector((state: RootType) => {
+    return state.courses;
+  });
+
+  const [course, setCourse] = useState<CourseType>(() => {
+    const course = {
+      id: 0,
+      title: "",
+      description: "",
+    };
+    if (courseEdit.id) {
+      return {
+        ...data.editCourse,
+      };
+    }
+    return course;
+  });
+
+  const [warning, setWarning] = useState<CourseWarning>({
+    title: false,
+    description: false,
+  });
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (courseEdit.id) {
+    } else {
+      if (warning.title || warning.description) {
+        return;
+      } else {
+        dispatch(addCourse(course));
+      }
+    }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setWarning((prev) => ({
+      ...prev,
+      [name]: value === "",
+    }));
+    setCourse((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // console.log(course);
+  
+
+  useEffect(() => {
+    if (courseEdit.id === 0) {
+      return;
+    }
+    dispatch(getCourseById(courseEdit.id));
+  }, []);
+  return (
+    <>
+      <div className="w-[100%] absolute h-[100vh] top-0 left-0 flex justify-center items-center">
+        <form
+          onSubmit={handleSubmit}
+          className="w-[500px] p-[20px] shadow-lg border-[1px] bg-white rounded-[5px]"
+        >
+          <div className="flex justify-between mb-[10px]">
+            <h2>{courseEdit.id === 0 ? "Thêm" : "Sửa"} Khóa Học</h2>
+            <p onClick={hideAddOrEditCourse} className="cursor-pointer">
+              X
+            </p>
+          </div>
+          <div className="w-[100%] h-[35px] mb-[20px]">
+            <input
+              onChange={handleChange}
+              className="w-[100%] outline-none p-[5px] pl-[10px] border-[1px] rounded-[3px]"
+              placeholder="Tiêu đề"
+              value={course.title || ""}
+              type="text"
+              name="title"
+            />
+          </div>
+          <div className="w-[100%] h-[150px] mb-[20px]">
+            <textarea
+              className="w-[100%] p-[5px] h-[100%] outline-none pl-[10px] border-[1px] resize-none rounded-[3px]"
+              placeholder="Mô tả"
+              value={course.description || ""}
+              name="description"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="w-[100%] h-[35px] mb-[20px] flex justify-center">
+            <button className="w-[120px] h-[100%] rounded-[3px] bg-blue-500">
+              {courseEdit.id ? "Sửa" : "Thêm"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
+  );
 };

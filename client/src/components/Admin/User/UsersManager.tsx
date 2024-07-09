@@ -24,6 +24,8 @@ const UserManager: React.FC = () => {
     setShowModal(!showModal);
   };
 
+  const users = Array.isArray(data.users) ? data.users : [data.users];
+
   useEffect(() => {
     dispatch(getAllUser());
   }, []);
@@ -34,7 +36,7 @@ const UserManager: React.FC = () => {
     }
   };
 
-  const paginatedUsers = data.users.slice(
+  const paginatedUsers = users.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
@@ -80,11 +82,15 @@ const UserManager: React.FC = () => {
           </table>
         </div>
         <div>
-          {totalPages > currentPage? <UserManagerFooter
-            currentPage={currentPage}
-            handlePageChange={(currentPage: number) => handlePageChange}
-            totalPages={totalPages}
-          /> : ''}
+          {totalPages > currentPage ? (
+            <UserManagerFooter
+              currentPage={currentPage}
+              handlePageChange={(currentPage: number) => handlePageChange}
+              totalPages={totalPages}
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </>

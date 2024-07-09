@@ -6,10 +6,11 @@ import {
   faLock,
   faLockOpen,
   faPenToSquare,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { Lock } from "../../Modal/Modal";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 interface Props {
   user: UserType;
@@ -17,6 +18,10 @@ interface Props {
 export const User: React.FC<Props> = ({ user }) => {
   const [lock, setLock] = useState<boolean>(false);
   const dispatch = useDispatch();
+
+  const hideLock = () => {
+    setLock(false);
+  };
   return (
     <>
       <tr>
@@ -29,7 +34,7 @@ export const User: React.FC<Props> = ({ user }) => {
               icon={faCircleUser}
             />
           )}{" "}
-          {user.firstName} {user.lastName}
+          {user.name}
         </td>
         <td className="p-[10px] bg-white border-y-[1px]">{user.email}</td>
         <td className="p-[10px] bg-white border-y-[1px]">
@@ -41,7 +46,7 @@ export const User: React.FC<Props> = ({ user }) => {
             {user.status ? "Đang hoạt động" : "Ngừng hoạt động"}
           </button>
         </td>
-        <td className="p-[10px] pl-[105px] bg-white border-y-[1px] border-r-[1px]">
+        <td className="p-[10px] pl-[125px] bg-white border-y-[1px] border-r-[1px]">
           {user.role === "ADMIN" ? (
             <>
               <FontAwesomeIcon
@@ -51,9 +56,7 @@ export const User: React.FC<Props> = ({ user }) => {
             </>
           ) : user.status ? (
             <FontAwesomeIcon
-              onClick={() =>
-                dispatch(changeUserStatus({ id: user.id, status: user.status }))
-              }
+              onClick={() => setLock(true)}
               icon={faLockOpen}
               className="mr-[25px] cursor-pointer text-[20px] text-[#3f3]"
             />
@@ -68,10 +71,11 @@ export const User: React.FC<Props> = ({ user }) => {
           )}
           <FontAwesomeIcon
             className="mr-[30px] cursor-pointer text-[#f80]  text-[20px]"
-            icon={faPenToSquare}
+            icon={faUser}
           />
         </td>
       </tr>
+      {lock ? <Lock hideLock={hideLock} user={user} /> : ""}
     </>
   );
 };

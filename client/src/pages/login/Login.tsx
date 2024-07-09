@@ -52,12 +52,7 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let response = await baseUrl.get(`users?email=${user.email}`);
-    if (
-      warning.email ||
-      warning.firstName ||
-      warning.lastName ||
-      warning.password
-    ) {
+    if (warning.email || warning.name || warning.password) {
       return;
     }
     if (response.data.length > 0) {
@@ -75,7 +70,6 @@ const Login: React.FC = () => {
         return;
       }
       if (response.data[0].email === user.email && decryptedPass) {
-        
         localStorage.setItem("userId", response.data[0].id);
         navigate("/");
       }

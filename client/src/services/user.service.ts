@@ -51,3 +51,19 @@ export const findEmail: any = createAsyncThunk(
         return response.data;
     }
 )
+
+export const getUserById: any = createAsyncThunk(
+    "users/getUserById",
+    async (id: number) => {
+        const response = await baseUrl.get(`users/${id}`);
+        return response.data;
+    }
+)
+
+export const getAdminUserById: any = createAsyncThunk(
+    "users/getAdminUserById",
+    async (id: number) => {
+        const response = await baseUrl.get(`users/${id}`);
+        return response.data;
+    }
+)

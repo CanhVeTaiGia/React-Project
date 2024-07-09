@@ -2,52 +2,26 @@
   "users": [
     {
       "id": 1,
-      "firstName": "Thi",
-      "lastName": "Online",
-      "email": "thionline@gmail.com",
-      "status": true,
-      "password": "$2a$10$JFu5zXZTOnh8WR0JQX/lYecBuBuhHiUXjEqUBYTumklNbOAZHKr0a",
-      "role": "ADMIN"
-    },
-    {
-      "id": 2,
-      "firstName": "Nguyễn",
-      "lastName": "Đắc Sơn",
+      "name": "Lương Hà Minh Vỹ",
       "email": "a@gmail.com",
-      "status": true,
-      "password": "$2a$10$hb/ESB.2MljP1N1kmOa.5ObrZS8p5bnzMX5VMKfFvVR/iARllfF.m",
-      "role": "USER"
-    },
-    {
-      "id": 3,
-      "firstName": "Lương Hà",
-      "lastName": "Minh Vỹ",
-      "email": "b@gmail.com",
-      "status": true,
-      "password": "$2a$10$/oNKGo/D3LNo.hUQmvziw.9UMiC8.HIwEmZrlY0XPhUwgwyPyYQCq",
-      "role": "ADMIN"
-    },
-    {
-      "id": 4,
-      "firstName": "Nguyễn",
-      "lastName": "Hà",
-      "email": "c@gmail.com",
-      "password": "$2a$10$fzmh297RYgBNBdT1Wrlr4evKz98i3Vu80FgtV581O5Z1e3P0LY56C",
+      "password": "$2a$10$T83..ydh03xDe2MqhICysurznI5RLhttndgAcIgU8.Qy8L7ylcyOW",
       "role": "ADMIN",
       "status": true
-    },
-    {
-      "id": 5,
-      "firstName": "Hoàng",
-      "lastName": "Long",
-      "email": "f@gmail.com",
-      "status": true,
-      "password": "$2a$10$2X95fKNi13A.UwrjzXfqquNycrW61H9bdItqs3EMlGVRASOvQrXcK",
-      "role": "USER"
     }
   ],
   "history": [],
-  "course": [],
+  "courses": [
+    {
+      "id": 1,
+      "title": "Lớp 12",
+      "description": "Chill"
+    },
+    {
+      "id": 2,
+      "title": "Lớp 11",
+      "description": "Hallo"
+    }
+  ],
   "lessons": [],
   "exam": [],
   "question": []

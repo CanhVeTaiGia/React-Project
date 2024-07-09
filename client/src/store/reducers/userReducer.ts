@@ -1,47 +1,40 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserType } from "../../interface/interface";
-import { changeUserStatus, findEmail, getAdminUser, getAllUser } from "../../services/user.service";
+import { changeUserStatus, findEmail, getAdminUser, getAdminUserById, getAllUser, getUserById } from "../../services/user.service";
 
-interface UsersState {
-    users: UserType[];
-    loading: boolean;
-    error: string | null;
-}
 
-const initialState: UsersState = {
-    users: [],
-    loading: false,
-    error: null,
-};
+
+const initialState: UserType[] = [];
 
 const userReducer: any = createSlice({
     name: "users",
-    initialState,
+    initialState: {
+        users: initialState,
+        adminProfile: {}
+    },
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(getAllUser.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
             .addCase(getAllUser.fulfilled, (state, action) => {
                 state.users = action.payload;
-                state.loading = false;
-            })
-            .addCase(getAllUser.rejected, (state) => {
-                state.loading = false;
             })
             .addCase(getAdminUser.fulfilled, (state, action) => {
                 state.users = action.payload;
             })
             .addCase(changeUserStatus.fulfilled, (state, action) => {
-                const existingUser = state.users.find((item) => item.id === action.payload.id);
+                const existingUser = state.users.find((item: UserType) => item.id === action.payload.id);
                 if(existingUser){
                     existingUser.status = action.payload.status;
                 }
             })
             .addCase(findEmail.fulfilled, (state, action) => {
                 state.users = action.payload;
+            })
+            .addCase(getUserById.fulfilled, (state, action) => {
+                state.users = action.payload;
+            })
+            .addCase(getAdminUserById.fulfilled, (state, action) => {
+                state.adminProfile = action.payload;
             })
     },
 });
