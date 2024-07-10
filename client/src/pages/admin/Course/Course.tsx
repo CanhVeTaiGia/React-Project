@@ -8,13 +8,12 @@ interface Props {
   course: CourseType;
   index: number;
   setCourseToEditOrAdd: (id: number) => void;
+  showDeleteModal: (id: number) => void;
 }
-const Course: React.FC<Props> = ({ course, index, setCourseToEditOrAdd }) => {
+const Course: React.FC<Props> = ({ course, index, setCourseToEditOrAdd,showDeleteModal }) => {
   const dispatch = useDispatch();
 
-  const handleDelete = (id: number) => {
-    dispatch(deleteCourse(id));
-  };
+ 
   return (
     <tr>
       <td className="bg-white text-center p-[10px] w-[5%] border-t-[1px]">
@@ -33,7 +32,7 @@ const Course: React.FC<Props> = ({ course, index, setCourseToEditOrAdd }) => {
           icon={faPenToSquare}
         />
         <FontAwesomeIcon
-          onClick={() => handleDelete(course.id)}
+          onClick={() => showDeleteModal(course.id)}
           className="text-[20px] text-[#f00] cursor-pointer"
           icon={faTrash}
         />

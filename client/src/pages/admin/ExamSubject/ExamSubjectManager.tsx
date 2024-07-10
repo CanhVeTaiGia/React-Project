@@ -4,12 +4,14 @@ import { ExamSubjectType, RootType } from "../../../interface/interface";
 import { useEffect, useState } from "react";
 import { getAllExamSubject } from "../../../services/examSubject.service";
 import ExamSubject from "./ExamSubject";
-import { AddAndEditExamSubject } from "../../../components/Modal/Modal";
+import { AddAndEditExamSubject, DeleteSubject } from "../../../components/Modal/Modal";
 
 const ExamSubjectManager: React.FC = () => {
   const data = useSelector((state: RootType) => {
     return state.examSubjects;
   });
+
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
   const [currentSubjectId, setCurrentSubjectId] = useState<number>(0);
 
@@ -17,6 +19,17 @@ const ExamSubjectManager: React.FC = () => {
     useState<boolean>(false);
 
   const dispatch = useDispatch();
+
+  const showDeleteModal = (id: number) => {
+    setDeleteModal(true);
+    setCurrentSubjectId(id);
+  }
+
+  const hideDeleteModal = () => {
+    setDeleteModal(false);
+  }
+
+  const examSubjects = Array.isArray(data.examSubjects)? data.examSubjects : [data.examSubjects]
 
   const setAddOrEdit = (id: number) => {
     setCurrentSubjectId(id);
@@ -32,6 +45,9 @@ const ExamSubjectManager: React.FC = () => {
   }, []);
   return (
     <>
+    {
+      deleteModal && <DeleteSubject id={currentSubjectId} hideDeleteModal={hideDeleteModal}/>
+    }
       {addAndEditExamSubject && (
         <AddAndEditExamSubject hideAddOrEdit={hideAddOrEdit} examSubjectId={currentSubjectId} />
       )}
@@ -61,7 +77,7 @@ const ExamSubjectManager: React.FC = () => {
             <tbody>
               {data.examSubjects.map((item: ExamSubjectType, index: number) => {
                 return (
-                  <ExamSubject key={item.id} index={index} examSubject={item} />
+                  <ExamSubject setAddOrEdit={setAddOrEdit} showDeleteModal={showDeleteModal} key={item.id} index={index} examSubject={item} />
                 );
               })}
             </tbody>

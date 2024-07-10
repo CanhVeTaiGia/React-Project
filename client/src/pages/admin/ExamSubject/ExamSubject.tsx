@@ -8,13 +8,19 @@ import { getCourseById } from "../../../services/course.service";
 interface Props {
   examSubject: ExamSubjectType;
   index: number;
+  setAddOrEdit: (id: number) => void; 
+  showDeleteModal: (id: number) => void;
 }
-const ExamSubject: React.FC<Props> = ({ examSubject, index }) => {
+const ExamSubject: React.FC<Props> = ({ examSubject, index, setAddOrEdit, showDeleteModal }) => {
   const data: any = useSelector((state: RootType) => {
     return state.courses;
   });
 
   const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    showDeleteModal(examSubject.id);
+  }
 
   useEffect(() => {
     dispatch(getCourseById(examSubject.courseId));
@@ -36,10 +42,12 @@ const ExamSubject: React.FC<Props> = ({ examSubject, index }) => {
         </td>
         <td className="bg-white p-[10px] text-center border-t-[1px]">
           <FontAwesomeIcon
+          onClick={() => setAddOrEdit(examSubject.id)}
             className="text-[20px] text-[#f60] mr-[20px] cursor-pointer"
             icon={faPenToSquare}
           />
           <FontAwesomeIcon
+          onClick={handleDelete}
             icon={faTrash}
             className="text-[20px] text-[#f00] cursor-pointer"
           />

@@ -3,8 +3,11 @@ import { CourseHeader } from "../../../components/Header/Header";
 import Course from "./Course";
 import { CourseType, RootType } from "../../../interface/interface";
 import { useEffect, useState } from "react";
-import { getAllCourse } from "../../../services/course.service";
-import { AddOrEditCourse } from "../../../components/Modal/Modal";
+import { deleteCourse, getAllCourse } from "../../../services/course.service";
+import {
+  AddOrEditCourse,
+  ConfirmDeleteCourse,
+} from "../../../components/Modal/Modal";
 
 const CourseManager: React.FC = () => {
   const data: any = useSelector((state: RootType) => {
@@ -35,6 +38,17 @@ const CourseManager: React.FC = () => {
     setShowAddOrEditCourse(true);
   };
 
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
+
+  const showDeleteModal = (id: number) => {
+    setDeleteModal(true);
+    setCourseEdit({ id, type: "add" });
+  };
+
+  const hideDeleteModal = () => {
+    setDeleteModal(false);
+  };
+
   const hideAddOrEditCourse = () => {
     setShowAddOrEditCourse(false);
   };
@@ -45,6 +59,7 @@ const CourseManager: React.FC = () => {
 
   return (
     <>
+      {deleteModal && <ConfirmDeleteCourse hideDeleteModal={hideDeleteModal} id={courseEdit.id}/>}
       {showAddOrEditCourse ? (
         <AddOrEditCourse
           courseEdit={courseEdit}
@@ -79,6 +94,7 @@ const CourseManager: React.FC = () => {
               return (
                 <Course
                   setCourseToEditOrAdd={setCourseToEditOrAdd}
+                  showDeleteModal={showDeleteModal}
                   course={item}
                   key={item.id}
                   index={index}

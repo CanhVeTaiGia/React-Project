@@ -1,12 +1,5 @@
 import store from "../store/store";
 
-export interface HistoryType{
-    id: number,
-    userId: number,
-    date: string,
-    point: number,
-    examId: number,
-}
 
 export interface CourseType{
     id: number,
@@ -29,13 +22,6 @@ export interface ExamSubjectType{
     courseId: number
 }
 
-export interface UserAnswerType{
-    id: number,
-    userId: number,
-    exampId: number,
-    score: number
-}
-
 export interface UserType{
     id: number,
     name: string,
@@ -44,6 +30,13 @@ export interface UserType{
     password: string,
     role: "USER" | "ADMIN",
     status: boolean
+}
+
+export interface UserAnswerType{
+    id: number,
+    userId: number,
+    exampId: number,
+    score: number
 }
 
 export interface Warning{
@@ -58,4 +51,12 @@ export type RootType = ReturnType<typeof store.getState>
 export interface CourseWarning{
     title: boolean,
     description: boolean
+}
+
+export interface Question{
+    id: number,
+    question: string,
+    examId: number,
+    options: string[],
+    answer: string
 }

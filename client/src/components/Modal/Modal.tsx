@@ -17,10 +17,18 @@ import {
 import { baseUrl } from "../../baseAPI/baseURL";
 import {
   addCourse,
+  deleteCourse,
   editCourse,
   getAllCourse,
   getCourseById,
 } from "../../services/course.service";
+import { current } from "@reduxjs/toolkit";
+import {
+  addExamSubject,
+  deleteExamSubject,
+  getExamSubjectById,
+  updateExamSubject,
+} from "../../services/examSubject.service";
 
 interface Props {
   showModal: boolean;
@@ -342,6 +350,7 @@ interface AddAndEditExamSubjectProps {
   examSubjectId: number;
   hideAddOrEdit: () => void;
 }
+
 export const AddAndEditExamSubject: React.FC<AddAndEditExamSubjectProps> = ({
   examSubjectId,
   hideAddOrEdit,
@@ -353,82 +362,202 @@ export const AddAndEditExamSubject: React.FC<AddAndEditExamSubjectProps> = ({
     courseId: 0,
   });
 
-  const data: any = useSelector((state: RootType) => {
-    return state.courses;
-  });
-
-  const dispatch = useDispatch();
-
+  
+  const { examSubjects, editSubject } = useSelector(
+    (state: RootType) => state.examSubjects
+    );
+    const dispatch = useDispatch();
+    const courses: any = useSelector((state: any) => {
+      
+      return state.courses.courses;
+    });
+    
+    const foundCourse = Array.isArray(courses)? courses : [courses]
+  
+  
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (examSubjectId) {
+      dispatch(updateExamSubject({...examSubject}));
+    } else {
+      dispatch(addExamSubject(examSubject));
+    }
+    hideAddOrEdit();
   };
+  
+  useEffect(() => {
+    if (examSubjectId) {
+      dispatch(getExamSubjectById(examSubjectId));
+    }
+  }, [examSubjectId, dispatch]);
 
+  useEffect(() => {
+    if (editSubject && examSubjectId) {
+      setExamSubject(editSubject);
+    }
+  }, [examSubjectId, editSubject]);
+  
+  useEffect(() => {
+    dispatch(getAllCourse());
+  }, [dispatch]);
+  
   useEffect(() => {
     dispatch(getAllCourse());
   }, []);
-
+  
   const handleChange = (
     e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
-  ) => {
+    ) => {
     const { name, value } = e.target;
     setExamSubject({ ...examSubject, [name]: value });
   };
+
+  return (
+    <div className="w-[100%] z-[200] h-[100vh] absolute top-0 left-0 flex justify-center items-center">
+      <form
+        className="w-[500px] rounded-[5px] shadow-md bg-white p-[20px]"
+        onSubmit={handleSubmit}
+      >
+        <div className="flex justify-between">
+          <h2 className="text-[20px]">
+            {examSubjectId ? "Sửa" : "Thêm"} Môn Thi
+          </h2>
+          <p onClick={hideAddOrEdit} className="cursor-pointer">
+            X
+          </p>
+        </div>
+        <div className="w-[100%] mt-[20px] h-[30px]">
+          <input
+            value={examSubject.title}
+            onChange={handleChange}
+            name="title"
+            placeholder="Tiêu đề"
+            type="text"
+            className="outline-none pl-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px]"
+          />
+        </div>
+        <div className="w-[100%] mt-[20px] h-[120px]">
+          <textarea
+            value={examSubject.description}
+            onChange={handleChange}
+            name="description"
+            placeholder="Mô tả"
+            className="outline-none p-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px] resize-none"
+          />
+        </div>
+        <div className="w-[100%] flex justify-center mt-[20px] h-[30px]">
+          <select
+            onChange={handleChange}
+            name="courseId"
+            className="w-[100%] outline-none rounded-[3px] text-[14px] border-[1px]"
+            value={examSubject.courseId}
+          >
+            <option hidden>Khóa thi</option>
+            {foundCourse.map((item: ExamSubjectType) => (
+              <option key={item.id} value={item.id}>
+                {item.title}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="w-[100%] h-[30px] mt-[20px] flex justify-center">
+          <button className="w-[120px] h-[100%] rounded-[5px] text-white bg-[#08f]">
+            {examSubjectId ? "Sửa" : "Thêm"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+interface ConfirmDeleteCourseProps {
+  id: number;
+  hideDeleteModal: () => void;
+}
+export const ConfirmDeleteCourse: React.FC<ConfirmDeleteCourseProps> = ({
+  id,
+  hideDeleteModal,
+}) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    hideDeleteModal();
+    dispatch(deleteCourse(id));
+  };
   return (
     <>
-      <div className="w-[100%] z-[200] h-[100vh] absolute top-0 left-0 flex justify-center items-center">
-        <form
-          className="w-[500px] rounded-[5px] shadow-md bg-white p-[20px]"
-          onSubmit={handleSubmit}
-        >
-          <div className="flex justify-between">
-            <h2 className="text-[20px]">
-              {examSubjectId ? "Sửa" : "Thêm"} Môn Thi
-            </h2>
-            <p onClick={hideAddOrEdit} className="cursor-pointer">
-              X
-            </p>
-          </div>
-          <div className="w-[100%] mt-[20px] h-[30px]">
-            <input
-              onChange={handleChange}
-              name="title"
-              placeholder="Tiêu đề"
-              type="text"
-              className="outline-none pl-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px]"
-            />
-          </div>
-          <div className="w-[100%] mt-[20px] h-[120px]">
-            <textarea
-              onChange={handleChange}
-              name="description"
-              placeholder="Tiêu đề"
-              className="outline-none p-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px] resize-none"
-            />
-          </div>
-          <div className="w-[100%] flex justify-center mt-[20px] h-[30px]">
-            <select
-              onChange={handleChange}
-              name="courseId"
-              className="w-[80px] rounded-[3px] text-[14px] border-[1px]"
+      <div className="w-[100%] absolute top-0 left-0 h-[100vh] flex justify-center items-center">
+        <div className="w-[500px] p-[20px] rounded-[5px] bg-white shadow-md">
+          <h2 className="text-[20px] py-[10px] border-b-[1px]">
+            Bạn có chắc muốn xóa
+          </h2>
+          <div className="w-[100%] mt-[10px] gap-[10px] flex justify-end">
+            <button
+              onClick={hideDeleteModal}
+              className="w-[100px] rounded-[3px] px-[10px] py-[5px] border-[1px]"
             >
-              <option hidden>Khóa thi</option>
-              {data.courses.map((item: any) => {
-                return item.id === examSubjectId ? (
-                  <option defaultChecked key={item.id} value={item.id}>
-                    {item.title}
-                  </option>
-                ) : (
-                  <option key={item.id} value={item.id}>
-                    {item.title}
-                  </option>
-                );
-              })}
-            </select>
+              Hủy
+            </button>
+            <button
+              className="w-[100px] rounded-[3px] px-[10px] py-[5px] bg-[#f00]"
+              onClick={handleDelete}
+            >
+              Xác nhận
+            </button>
           </div>
-        </form>
+        </div>
       </div>
     </>
   );
 };
+
+interface DeleteSubjectProps {
+  id: number;
+  hideDeleteModal: () => void;
+}
+export const DeleteSubject: React.FC<DeleteSubjectProps> = ({
+  id,
+  hideDeleteModal,
+}) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(deleteExamSubject(id));
+    hideDeleteModal();
+  };
+  return (
+    <>
+      <div className="w-[100%] absolute top-0 left-0 h-[100vh] flex justify-center items-center">
+        <div className="w-[500px] p-[20px] rounded-[5px] bg-white shadow-md">
+          <h2 className="text-[20px] py-[10px] border-b-[1px]">
+            Bạn có chắc muốn xóa
+          </h2>
+          <div className="w-[100%] mt-[10px] gap-[10px] flex justify-end">
+            <button
+              onClick={hideDeleteModal}
+              className="w-[100px] rounded-[3px] px-[10px] py-[5px] border-[1px]"
+            >
+              Hủy
+            </button>
+            <button
+              className="w-[100px] rounded-[3px] px-[10px] py-[5px] bg-[#f00]"
+              onClick={handleDelete}
+            >
+              Xác nhận
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+interface AddAndEditExamProps{
+  id: number,
+  hideModal: () => void,
+}
+export const AddAndEditExam: React.FC = () => {
+  return <></>
+}

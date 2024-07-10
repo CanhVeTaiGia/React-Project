@@ -4,6 +4,7 @@ import {
   faCircleQuestion,
   faCircleUser,
   faClockRotateLeft,
+  faFile,
   faHouse,
   faList,
   faRightFromBracket,
@@ -80,11 +81,19 @@ export const AdminNavbar: React.FC<Props> = ({ id }) => {
             <p>Môn thi</p>
           </div>
           <div
+            onClick={() => navigate("exam")}
+            className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]"
+          >
+            <FontAwesomeIcon icon={faFile} />
+            <p>Đề thi</p>
+          </div>
+
+          <div
             onClick={() => navigate("coursemanager")}
             className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]"
           >
             <FontAwesomeIcon icon={faCircleQuestion} />
-            <p>Đề thi</p>
+            <p>Câu hỏi</p>
           </div>
           <div className="p-[10px] pl-[20px] mb-[20px] flex gap-[20px] items-center cursor-pointer rounded-[5px] hover:bg-[#222]">
             <FontAwesomeIcon icon={faClockRotateLeft} />
