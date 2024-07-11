@@ -4,7 +4,7 @@ import { addExamSubject, deleteExamSubject, getAllExamSubject, getExamSubjectByI
 
 const initialState: ExamSubjectType[] = [];
 
-const examSubjectReducer = createSlice({
+const examSubjectReducer: any = createSlice({
     name: "examSubjects",
     initialState: {
         examSubjects: initialState,

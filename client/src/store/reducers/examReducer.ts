@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ExamType } from "../../interface/interface";
-import { getAllExam } from "../../services/exam.service";
+import { addExam, deleteExam, getAllExam, getExamById, updateExam } from "../../services/exam.service";
 
 const initialState: ExamType[] = [];
 
@@ -20,6 +20,18 @@ const examReducer: any = createSlice(
         extraReducers: (builder) => {
             builder
             .addCase(getAllExam.fulfilled, (state, action) => {
+                state.exams = action.payload;
+            })
+            .addCase(getExamById.fulfilled, (state, action) => {
+                state.editExam = action.payload;
+            })
+            .addCase(updateExam.fulfilled, (state, action) => {
+                state.exams.map((item) => item.id === action.payload.id? action.payload : item);
+            })
+            .addCase(addExam.fulfilled, (state, action) => {
+                state.exams.push(action.payload);
+            })
+            .addCase(deleteExam.fulfilled, (state, action) => {
                 state.exams = action.payload;
             })
         }

@@ -16,7 +16,7 @@ export const UserManagerFooter: React.FC<Props> = ({
 }) => {
   return (
     <>
-      <div className="justify-center bottom-[30px] right-[0%] w-[100%]">
+      <footer className="justify-center bottom-[30px] h-[300px] w-[100%]">
         <h2 className="w-[100%] mb-[10px] text-center">
           Trang {currentPage} / {totalPages}
         </h2>
@@ -43,7 +43,15 @@ export const UserManagerFooter: React.FC<Props> = ({
             />
           </div>
         </div>
-      </div>
+      </footer>
     </>
   );
 };
+
+export const Footer: React.FC = () => {
+  return (
+    <footer className="w-[100%] bg-[#222] border-t-[1px] rounded-t-[5px] border-[#555] p-[20px] px-[120px] mt-[20px]">
+      
+    </footer>
+  )
+}

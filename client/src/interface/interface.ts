@@ -53,7 +53,7 @@ export interface CourseWarning{
     description: boolean
 }
 
-export interface Question{
+export interface QuestType{
     id: number,
     question: string,
     examId: number,

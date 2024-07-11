@@ -3,6 +3,8 @@ import {
   CourseType,
   CourseWarning,
   ExamSubjectType,
+  ExamType,
+  QuestType,
   RootType,
   UserType,
   Warning,
@@ -29,6 +31,15 @@ import {
   getExamSubjectById,
   updateExamSubject,
 } from "../../services/examSubject.service";
+import {
+  addExam,
+  deleteExam,
+  getAllExam,
+  getExamById,
+  updateExam,
+} from "../../services/exam.service";
+import { faL } from "@fortawesome/free-solid-svg-icons";
+import { addQuest, updateQuest } from "../../services/quest.service";
 
 interface Props {
   showModal: boolean;
@@ -362,29 +373,26 @@ export const AddAndEditExamSubject: React.FC<AddAndEditExamSubjectProps> = ({
     courseId: 0,
   });
 
-  
-  const { examSubjects, editSubject } = useSelector(
+  const { examSubjects, editSubject }: any = useSelector(
     (state: RootType) => state.examSubjects
-    );
-    const dispatch = useDispatch();
-    const courses: any = useSelector((state: any) => {
-      
-      return state.courses.courses;
-    });
-    
-    const foundCourse = Array.isArray(courses)? courses : [courses]
-  
-  
+  );
+  const dispatch = useDispatch();
+  const courses: any = useSelector((state: any) => {
+    return state.courses.courses;
+  });
+
+  const foundCourse = Array.isArray(courses) ? courses : [courses];
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (examSubjectId) {
-      dispatch(updateExamSubject({...examSubject}));
+      dispatch(updateExamSubject({ ...examSubject }));
     } else {
       dispatch(addExamSubject(examSubject));
     }
     hideAddOrEdit();
   };
-  
+
   useEffect(() => {
     if (examSubjectId) {
       dispatch(getExamSubjectById(examSubjectId));
@@ -396,20 +404,20 @@ export const AddAndEditExamSubject: React.FC<AddAndEditExamSubjectProps> = ({
       setExamSubject(editSubject);
     }
   }, [examSubjectId, editSubject]);
-  
+
   useEffect(() => {
     dispatch(getAllCourse());
   }, [dispatch]);
-  
+
   useEffect(() => {
     dispatch(getAllCourse());
   }, []);
-  
+
   const handleChange = (
     e: React.ChangeEvent<
-    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
-    ) => {
+  ) => {
     const { name, value } = e.target;
     setExamSubject({ ...examSubject, [name]: value });
   };
@@ -554,10 +562,384 @@ export const DeleteSubject: React.FC<DeleteSubjectProps> = ({
   );
 };
 
-interface AddAndEditExamProps{
-  id: number,
-  hideModal: () => void,
+interface AddAndEditExamProps {
+  data: any;
+  hideModal: () => void;
 }
-export const AddAndEditExam: React.FC = () => {
-  return <></>
+export const AddAndEditExam: React.FC<AddAndEditExamProps> = ({
+  data,
+  hideModal,
+}) => {
+  const dispatch = useDispatch();
+
+  const [exam, setExam] = useState<ExamType>({
+    ...data,
+  });
+
+  const { editExam }: any = useSelector((state: RootType) => {
+    return state.exams;
+  });
+
+  const { examSubjects }: any = useSelector((state: RootType) => {
+    return state.examSubjects;
+  });
+
+  const subjectArr = Array.isArray(examSubjects)
+    ? examSubjects
+    : [examSubjects];
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (
+      !exam.title ||
+      !exam.description ||
+      !exam.duration ||
+      !exam.examSubjectId
+    ) {
+      return;
+    }
+
+    if (data?.id) {
+      const updatedExam = {
+        ...exam,
+        examSubjectId: Number(exam.examSubjectId),
+      };
+      dispatch(updateExam(exam));
+      hideModal();
+    } else {
+      const newExam = {
+        ...exam,
+        examSubjectId: Number(exam.examSubjectId),
+      };
+      dispatch(addExam(newExam));
+      hideModal();
+    }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setExam({ ...exam, [name]: value });
+  };
+  return (
+    <>
+      <div className="w-[100%] z-[200] h-[100vh] absolute top-0 left-0 flex justify-center items-center">
+        <form
+          onSubmit={handleSubmit}
+          className="w-[500px] rounded-[5px] shadow-md bg-white  white p-[20px]"
+        >
+          <div className="flex justify-between">
+            <h2 className="text-[20px]">{data?.id ? "Sửa" : "Thêm"} Đề Thi</h2>
+            <p onClick={hideModal} className="cursor-pointer">
+              X
+            </p>
+          </div>
+          <div className="w-[100%] mt-[20px] h-[30px]">
+            <input
+              onChange={handleChange}
+              value={exam?.title || ""}
+              name="title"
+              placeholder="Tiêu đề"
+              type="text"
+              className="outline-none pl-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px]"
+            />
+          </div>
+          <div className="w-[100%] mt-[20px] h-[120px]">
+            <textarea
+              onChange={handleChange}
+              value={exam?.description || ""}
+              name="description"
+              placeholder="Mô tả"
+              className="outline-none p-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px] resize-none"
+            />
+          </div>
+          <div className="w-[100%] flex justify-center mt-[20px] h-[30px]">
+            <select
+              onChange={handleChange}
+              value={exam?.examSubjectId || 0}
+              name="examSubjectId"
+              className="w-[100%] outline-none rounded-[3px] text-[14px] border-[1px]"
+            >
+              <option hidden>Môn thi</option>
+              {subjectArr.map((item: ExamSubjectType) => {
+                return (
+                  <option key={item.id} value={item.id}>
+                    {item.title}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="w-[100%] flex justify-center mt-[20px] h-[30px]">
+            <input
+              onChange={handleChange}
+              value={exam?.duration || 1}
+              type="number"
+              name="duration"
+              min={1}
+              className="outline-none w-[120px] pl-[10px] border-[1px]"
+            />
+          </div>
+          <div className="w-[100%] h-[30px] mt-[20px] flex justify-center">
+            <button className="w-[120px] h-[100%] rounded-[5px] text-white bg-[#08f]">
+              {data?.id ? "Sửa" : "Thêm"} Đề Thi
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+};
+
+interface DeleteExamType {
+  id: number;
+  hideDeleteModal: () => void;
 }
+export const DeleteExam: React.FC<DeleteExamType> = ({
+  id,
+  hideDeleteModal,
+}) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(deleteExam(id));
+    hideDeleteModal();
+  };
+  const hide = () => {
+    hideDeleteModal();
+  };
+  return (
+    <>
+      <div className="w-[100%] absolute top-0 left-0 h-[100vh] flex justify-center items-center">
+        <div className="w-[500px] p-[20px] rounded-[5px] bg-white shadow-md">
+          <h2 className="text-[20px] py-[10px] border-b-[1px]">
+            Bạn có chắc muốn xóa
+          </h2>
+          <div className="w-[100%] mt-[10px] gap-[10px] flex justify-end">
+            <button
+              onClick={hide}
+              className="w-[100px] rounded-[3px] px-[10px] py-[5px] border-[1px]"
+            >
+              Hủy
+            </button>
+            <button
+              onClick={handleDelete}
+              className="w-[100px] rounded-[3px] px-[10px] py-[5px] bg-[#f00]"
+            >
+              Xác nhận
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+interface AddAndEditQuestProps {
+  data: any;
+  hideModal: () => void;
+}
+export const AddAndEditQuest: React.FC<AddAndEditQuestProps> = ({
+  data,
+  hideModal,
+}) => {
+  const dispatch = useDispatch();
+  const [quest, setQuest] = useState<QuestType>({
+    ...data,
+  });
+
+  const { exams }: any = useSelector((state: RootType) => {
+    return state.exams;
+  });
+
+  const examArr = exams ? (Array.isArray(exams) ? exams : [exams]) : [];
+
+  useEffect(() => {
+    dispatch(getAllExam());
+  }, []);
+
+  const handleSetOption = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    const options = quest.options ? quest.options : ["", "", "", ""];
+    if (name === "A") {
+      options[0] = value;
+    }
+    if (name === "B") {
+      options[1] = value;
+    }
+    if (name === "C") {
+      options[2] = value;
+    }
+    if (name === "D") {
+      options[3] = value;
+    }
+    setQuest({ ...quest, options: [...options] });
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setQuest({ ...quest, [name]: value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (data) {
+      const updatedQuest = {
+        ...quest,
+        examId: Number(quest.examId),
+      };
+      dispatch(updateQuest(updatedQuest));
+      hideModal();
+    } else {
+      const newQuest = {
+        ...quest,
+        examId: Number(quest.examId),
+      };
+      dispatch(addQuest(newQuest));
+      hideModal();
+    }
+  };
+
+  return (
+    <>
+      <div className="w-[100%] z-[200] h-[100vh] absolute top-0 left-0 flex justify-center items-center">
+        <form
+          onSubmit={handleSubmit}
+          className="w-[700px] rounded-[5px] shadow-md bg-white  white p-[20px]"
+        >
+          <div className="flex justify-between">
+            <h2 className="text-[20px]">{data ? "Sửa" : "Thêm"} Câu hỏi</h2>
+            <p onClick={hideModal} className="cursor-pointer">
+              X
+            </p>
+          </div>
+          <div className="w-[100%] mt-[20px] h-[30px]">
+            <input
+              onChange={handleChange}
+              value={quest.question}
+              name="question"
+              placeholder="Câu hỏi"
+              type="text"
+              className="outline-none pl-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px]"
+            />
+          </div>
+          <div className="w-[100%] mt-[20px] flex h-[30px] gap-[10px]">
+            <input
+              checked={
+                quest && quest.options
+                  ? quest.options[0]
+                    ? quest.options[0] === quest.answer
+                    : false
+                  : false
+              }
+              onChange={handleChange}
+              name="answer"
+              type="checkbox"
+              value={quest.options && quest ? quest.options[0] || "" : ""}
+            />
+            <input
+              name="A"
+              value={quest.options && quest ? quest.options[0] || "" : ""}
+              placeholder="Câu A"
+              className="outline-none p-[10px] rounded-[3px] w-[100%] gap-[10px] h-[100%] border-[1px] resize-none"
+            />
+          </div>
+          <div className="w-[100%] mt-[20px] flex h-[30px] gap-[10px]">
+            <input
+              name="answer"
+              checked={
+                quest && quest.options
+                  ? quest.options[1]
+                    ? quest.options[1] === quest.answer
+                    : false
+                  : false
+              }
+              onChange={handleChange}
+              type="checkbox"
+              value={quest.options && quest ? quest.options[1] || "" : ""}
+            />
+            <input
+              value={quest.options && quest ? quest.options[1] || "" : ""}
+              name="B"
+              placeholder="Câu b"
+              className="outline-none p-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px] resize-none"
+            />
+          </div>
+          <div className="w-[100%] mt-[20px] h-[30px] flex gap-[10px]">
+            <input
+              name="answer"
+              checked={
+                quest && quest.options
+                  ? quest.options[2]
+                    ? quest.options[2] === quest.answer
+                    : false
+                  : false
+              }
+              type="checkbox"
+              onChange={handleChange}
+              value={quest.options && quest ? quest.options[2] || "" : ""}
+            />
+            <input
+              value={quest.options && quest ? quest.options[2] || "" : ""}
+              name="C"
+              placeholder="Câu c"
+              className="outline-none p-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px] resize-none"
+            />
+          </div>
+          <div className="w-[100%] mt-[20px] h-[30px] flex gap-[10px]">
+            <input
+              name="answer"
+              checked={
+                quest && quest.options
+                  ? quest.options[3]
+                    ? quest.options[3] === quest.answer
+                    : false
+                  : false
+              }
+              type="checkbox"
+              onChange={handleChange}
+              value={quest.options && quest ? quest.options[3] || "" : ""}
+            />
+            <input
+              value={quest.options && quest ? quest.options[3] || "" : ""}
+              name="D"
+              placeholder="Câu D"
+              className="outline-none p-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px] resize-none"
+            />
+          </div>
+          <div className="w-[100%] flex justify-center mt-[20px] h-[30px]">
+            
+            <select
+            onChange={handleChange}
+              value={quest?.examId ? quest.examId : 0}
+              name="exam
+              Id"
+              className="w-[100%] outline-none rounded-[3px] text-[14px] border-[1px]"
+            >
+              <option hidden>Đề thi</option>
+              {examArr.map((item: ExamType) => {
+                return (
+                  <option key={item.id} value={item.id}>
+                    {item.title}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="w-[100%] h-[30px] mt-[20px] flex justify-center">
+            <button className="w-[120px] h-[100%] rounded-[5px] text-white bg-[#08f]">
+              {data ? "Sửa" : "Thêm"} Câu hỏi
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+};

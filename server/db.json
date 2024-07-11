@@ -18,241 +18,96 @@
   ],
   "examSubjects": [
     {
-        "id": 1,
-        "title": "Toán học",
-        "description": "Nghiên cứu về các số học, đại lượng và hình học.",
-        "courseId": 1
+      "id": 1,
+      "title": "Toán học",
+      "description": "Nghiên cứu về các số học, đại lượng và hình học.",
+      "courseId": 1
     },
     {
-        "id": 2,
-        "title": "Vật lý",
-        "description": "Nghiên cứu về các đặc tính của vật chất và năng lượng.",
-        "courseId": 2
-    },
-    {
-        "id": 3,
-        "title": "Ngữ văn",
-        "description": "Nghiên cứu về văn học và ngôn ngữ.",
-        "courseId": 3
+      "id": 2,
+      "title": "Văn Học",
+      "description": "Nghiên cứu về các văn học.",
+      "courseId": 1
     }
-]
-,
+  ],
   "exams": [
     {
-        "id": 1,
-        "title": "Kỳ thi tốt nghiệp THPT Toán học",
-        "description": "Kỳ thi cuối cấp bao gồm toàn bộ chương trình Toán học.",
-        "duration": 180,
-        "examSubjectId": 1
+      "id": 1,
+      "title": "Kỳ thi tốt nghiệp THPT Toán học",
+      "description": "Kỳ thi cuối cấp bao gồm toàn bộ chương trình Toán học.",
+      "duration": 180,
+      "examSubjectId": 1
     },
     {
-        "id": 2,
-        "title": "Kỳ thi tốt nghiệp THPT Vật lý",
-        "description": "Kỳ thi cuối cấp tập trung vào các vấn đề lý thuyết và thực hành vật lý.",
-        "duration": 180,
-        "examSubjectId": 2
-    },
-    {
-        "id": 3,
-        "title": "Kỳ thi tốt nghiệp THPT Ngữ văn",
-        "description": "Kỳ thi cuối cấp về văn học và ngôn ngữ.",
-        "duration": 120,
-        "examSubjectId": 3
-    },
-    {
-        "id": 4,
-        "title": "Kỳ thi học sinh giỏi Toán học",
-        "description": "Kỳ thi dành cho học sinh có thành tích xuất sắc trong môn Toán học.",
-        "duration": 120,
-        "examSubjectId": 1
-    },
-    {
-        "id": 5,
-        "title": "Kỳ thi học sinh giỏi Vật lý",
-        "description": "Kỳ thi dành cho học sinh có thành tích xuất sắc trong môn Vật lý.",
-        "duration": 90,
-        "examSubjectId": 2
+      "id": 2,
+      "title": "Kỳ thi tốt nghiệp THPT Văn học",
+      "description": "Kỳ thi cuối cấp bao gồm toàn bộ chương trình Văn học.",
+      "duration": 180,
+      "examSubjectId": 2
     }
-]
-,
-  "questions": [
+  ],
+  "quests": [
     {
-        "id": 1,
-        "question": "Công thức tính diện tích của tam giác là gì?",
-        "examId": 1,
-        "options": ["A = 1/2 * cơ sở * chiều cao", "A = cơ sở * chiều cao", "A = π * bán kính^2", "A = 2 * π * bán kính"],
-        "answer": "A = 1/2 * cơ sở * chiều cao"
+      "id": 1,
+      "question": "Công thức tính diện tích của tam giác là gì?",
+      "examId": 1,
+      "options": [
+        "A = 1/2 * cơ sở * chiều cao",
+        "A = cơ sở * chiều cao",
+        "A = π * bán kính^2",
+        "A = 2 * π * bán kính"
+      ],
+      "answer": "A = 1/2 * cơ sở * chiều cao",
+      "examSubjectId": "2"
     },
     {
-        "id": 2,
-        "question": "Trong các tùy chọn sau, đâu là ví dụ về nguồn năng lượng tái tạo?",
-        "examId": 1,
-        "options": ["Than đá", "Khí tự nhiên", "Năng lượng mặt trời", "Dầu"],
-        "answer": "Năng lượng mặt trời"
+      "id": 2,
+      "question": "Trong các tùy chọn sau, đâu là ví dụ về nguồn năng lượng tái tạo?",
+      "examId": 2,
+      "options": [
+        "Than đá",
+        "Khí tự nhiên",
+        "Năng lượng mặt trời",
+        "Dầu"
+      ],
+      "answer": "Năng lượng mặt trời"
     },
     {
-        "id": 3,
-        "question": "Bao nhiêu là giá trị của π (pi)?",
-        "examId": 1,
-        "options": ["3.14", "2.71", "1.618", "4.669"],
-        "answer": "3.14"
+      "id": 3,
+      "question": "Bao nhiêu là giá trị của π (pi)?",
+      "examId": 1,
+      "options": [
+        "3.14",
+        "2.71",
+        "1.618",
+        "4.669"
+      ],
+      "answer": "3.14"
     },
     {
-        "id": 4,
-        "question": "Ai là người phát minh ra địa chấn (earthquake) đầu tiên?",
-        "examId": 1,
-        "options": ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Hippocrates"],
-        "answer": "Hippocrates"
+      "id": 4,
+      "question": "Ai là người phát minh ra địa chấn (earthquake) đầu tiên?",
+      "examId": 1,
+      "options": [
+        "Isaac Newton",
+        "Albert Einstein",
+        "Galileo Galilei",
+        "Hippocrates"
+      ],
+      "answer": "Hippocrates"
     },
     {
-        "id": 5,
-        "question": "Đơn vị đo nhiệt độ được sử dụng phổ biến là gì?",
-        "examId": 1,
-        "options": ["Celsius", "Fahrenheit", "Kelvin", "Rankine"],
-        "answer": "Celsius"
-    },
-    {
-      "id": 6,
-      "question": "Công thức tính diện tích hình tròn là gì?",
-      "examId": 2,
-      "options": ["A = π * bán kính^2", "A = 2 * π * bán kính", "A = cạnh * cạnh", "A = 1/2 * cơ sở * chiều cao"],
-      "answer": "A = π * bán kính^2"
-  },
-  {
-      "id": 7,
-      "question": "Điều gì xảy ra khi axit phản ứng với bazơ?",
-      "examId": 2,
-      "options": ["Phản ứng trao đổi", "Phản ứng khử", "Phản ứng trung hòa", "Phản ứng oxy hóa"],
-      "answer": "Phản ứng trung hòa"
-  },
-  {
-      "id": 8,
-      "question": "Ai là người phát minh ra định luật của trọng lực (law of gravity)?",
-      "examId": 2,
-      "options": ["Isaac Newton", "Albert Einstein", "Galileo Galilei", "Hippocrates"],
-      "answer": "Isaac Newton"
-  },
-  {
-      "id": 9,
-      "question": "Đơn vị đo thời gian được sử dụng phổ biến là gì?",
-      "examId": 2,
-      "options": ["Giây", "Phút", "Giờ", "Ngày"],
-      "answer": "Giây"
-  },
-  {
-      "id": 10,
-      "question": "Đơn vị đo năng lượng là gì?",
-      "examId": 2,
-      "options": ["Joule", "Newton", "Watt", "Volt"],
-      "answer": "Joule"
-  },
-  {
-    "id": 11,
-    "question": "Ai là Tổng thống thứ 16 của Hoa Kỳ?",
-    "examId": 3,
-    "options": ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "John Adams"],
-    "answer": "Abraham Lincoln"
-},
-{
-    "id": 12,
-    "question": "Ai là Tổng thống thứ 32 của Hoa Kỳ?",
-    "examId": 3,
-    "options": ["John F. Kennedy", "Dwight D. Eisenhower", "Franklin D. Roosevelt", "Harry S. Truman"],
-    "answer": "Franklin D. Roosevelt"
-},
-{
-    "id": 13,
-    "question": "Ai là người đã viết bản Tuyên ngôn Độc lập của Hoa Kỳ?",
-    "examId": 3,
-    "options": ["George Washington", "Thomas Jefferson", "John Adams", "Benjamin Franklin"],
-    "answer": "Thomas Jefferson"
-},
-{
-    "id": 14,
-    "question": "Ai là Tổng thống thứ 26 của Hoa Kỳ?",
-    "examId": 3,
-    "options": ["John F. Kennedy", "Theodore Roosevelt", "Bill Clinton", "George W. Bush"],
-    "answer": "Theodore Roosevelt"
-},
-{
-    "id": 15,
-    "question": "Ai là Tổng thống thứ 4 của Hoa Kỳ?",
-    "examId": 3,
-    "options": ["James Madison", "John Quincy Adams", "Andrew Jackson", "James Monroe"],
-    "answer": "James Madison"
-},
-{
-  "id": 16,
-  "question": "Cuốn tiểu thuyết nào được viết bởi Victor Hugo?",
-  "examId": 4,
-  "options": ["Les Misérables", "War and Peace", "Pride and Prejudice", "The Great Gatsby"],
-  "answer": "Les Misérables"
-},
-{
-  "id": 17,
-  "question": "Ai là tác giả của cuốn tiểu thuyết '1984'?",
-  "examId": 4,
-  "options": ["George Orwell", "Aldous Huxley", "Ray Bradbury", "H.G. Wells"],
-  "answer": "George Orwell"
-},
-{
-  "id": 18,
-  "question": "Cuốn tiểu thuyết nào được viết bởi Jane Austen?",
-  "examId": 4,
-  "options": ["Emma", "To Kill a Mockingbird", "Catch-22", "The Catcher in the Rye"],
-  "answer": "Emma"
-},
-{
-  "id": 19,
-  "question": "Cuốn tiểu thuyết nào được viết bởi Leo Tolstoy?",
-  "examId": 4,
-  "options": ["Anna Karenina", "Crime and Punishment", "The Brothers Karamazov", "War and Peace"],
-  "answer": "War and Peace"
-},
-{
-  "id": 20,
-  "question": "Cuốn tiểu thuyết nào được viết bởi Jules Verne?",
-  "examId": 4,
-  "options": ["Around the World in Eighty Days", "The Adventures of Sherlock Holmes", "Don Quixote", "Dracula"],
-  "answer": "Around the World in Eighty Days"
-},
-{
-  "id": 21,
-  "question": "Thủ đô của Canada là gì?",
-  "examId": 5,
-  "options": ["Toronto", "Vancouver", "Ottawa", "Montreal"],
-  "answer": "Ottawa"
-},
-{
-  "id": 22,
-  "question": "Đâu là núi lửa nổi tiếng ở Nhật Bản?",
-  "examId": 5,
-  "options": ["Mount Fuji", "Mount Everest", "Mount Kilimanjaro", "Mount Vesuvius"],
-  "answer": "Mount Fuji"
-},
-{
-  "id": 23,
-  "question": "Thành phố nào là thủ đô của Pháp?",
-  "examId": 5,
-  "options": ["Marseille", "Nice", "Lyon", "Paris"],
-  "answer": "Paris"
-},
-{
-  "id": 24,
-  "question": "Đâu là thành phố lớn nhất ở Brazil?",
-  "examId": 5,
-  "options": ["Brasília", "Rio de Janeiro", "São Paulo", "Salvador"],
-  "answer": "São Paulo"
-},
-{
-  "id": 25,
-  "question": "Đâu là thành phố nổi tiếng với Lâu đài Himeji ở Nhật Bản?",
-  "examId": 5,
-  "options": ["Osaka", "Kyoto", "Tokyo", "Himeji"],
-  "answer": "Himeji"
-}
-]
-
-,
+      "id": 5,
+      "question": "Đơn vị đo nhiệt độ được sử dụng phổ biến là gì?",
+      "examId": 1,
+      "options": [
+        "Celsius",
+        "Fahrenheit",
+        "Kelvin",
+        "Rankine"
+      ],
+      "answer": "Celsius"
+    }
+  ],
   "userAnswers": []
 }

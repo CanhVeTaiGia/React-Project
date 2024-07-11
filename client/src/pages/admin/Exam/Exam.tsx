@@ -8,8 +8,10 @@ import { getAllExamSubject } from "../../../services/examSubject.service";
 interface Props {
   exam: ExamType;
   index: number;
+  showModal: (exam: ExamType) => void;
+  showDeleteModal: (id: number) => void;
 }
-const Exam: React.FC<Props> = ({ exam, index }) => {
+const Exam: React.FC<Props> = ({ exam, index, showModal, showDeleteModal }) => {
   const dispatch = useDispatch();
   const data: any = useSelector((state: RootType) => {
     return state.examSubjects;
@@ -18,8 +20,6 @@ const Exam: React.FC<Props> = ({ exam, index }) => {
   const foundSubject = data.examSubjects.find((item: ExamType) => {
     return item.id === exam.examSubjectId;
   });
-
-  console.log(foundSubject);
 
   useEffect(() => {
     dispatch(getAllExamSubject());
@@ -44,11 +44,13 @@ const Exam: React.FC<Props> = ({ exam, index }) => {
       </td>
       <td className="bg-white p-[10px] text-center border-t-[1px]">
         <FontAwesomeIcon
+          onClick={() => showModal(exam)}
           className="text-[20px] text-[#f60] mr-[20px] cursor-pointer"
           icon={faPenToSquare}
         />
         <FontAwesomeIcon
           icon={faTrash}
+          onClick={() => showDeleteModal(exam.id)}
           className="text-[20px] text-[#f00] cursor-pointer"
         />
       </td>
