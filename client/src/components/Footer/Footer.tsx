@@ -16,7 +16,7 @@ export const UserManagerFooter: React.FC<Props> = ({
 }) => {
   return (
     <>
-      <footer className="justify-center bottom-[30px] h-[300px] w-[100%]">
+      <footer className="justify-center h-[300px] w-[100%]">
         <h2 className="w-[100%] mb-[10px] text-center">
           Trang {currentPage} / {totalPages}
         </h2>
@@ -31,7 +31,7 @@ export const UserManagerFooter: React.FC<Props> = ({
               <button
                 key={index + 1}
                 onClick={() => handlePageChange(index + 1)}
-                className='cursor-pointer w-[40px] h-[40px] text-[20px] border-y-[1px] border-[#bbb]'
+                className="cursor-pointer w-[40px] h-[40px] text-[20px] border-y-[1px] border-[#bbb]"
               >
                 {index + 1}
               </button>
@@ -50,8 +50,27 @@ export const UserManagerFooter: React.FC<Props> = ({
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="w-[100%] bg-[#222] border-t-[1px] rounded-t-[5px] border-[#555] p-[20px] px-[120px] mt-[20px]">
-      
+    <footer className="w-[100%] text-white flex justify-around bg-[#222] border-t-[1px] rounded-t-[5px] border-[#555] p-[20px] px-[120px]">
+      <div>
+        <h2 className="text-[20px] mb-[10px]">SẢN PHẨM</h2>
+        <ul className="text-[14px] text-[#ddd]">
+          <li className="mb-[5px]">Dành cho khóa thi, bài giảng</li>
+          <li className="mb-[5px]">Danh sách câu hỏi</li>
+          <li className="mb-[5px]">Bộ đề cho các lớp</li>  
+          <li className="mb-[5px]">Tài liệu tham khảo</li>  
+          <li className="mb-[5px]">Giải bài tập các môn</li>  
+        </ul>
+      </div>
+      <div>
+        <h2 className="text-[20px] mb-[10px]">THÔNG TIN VỀ THI ONLINE</h2>
+        <ul className="text-[14px] text-[#ddd]">
+          <li className="mb-[5px]">Dành cho khóa thi, bài giảng</li>
+          <li className="mb-[5px]">Danh sách câu hỏi</li>
+          <li className="mb-[5px]">Bộ đề cho các lớp</li>  
+          <li className="mb-[5px]">Tài liệu tham khảo</li>  
+          <li className="mb-[5px]">Giải bài tập các môn</li>  
+        </ul>
+      </div>
     </footer>
-  )
-}
+  );
+};

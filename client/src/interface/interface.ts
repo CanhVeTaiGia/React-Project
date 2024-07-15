@@ -32,10 +32,10 @@ export interface UserType{
     status: boolean
 }
 
-export interface UserAnswerType{
+export interface HistoryType{
     id: number,
     userId: number,
-    exampId: number,
+    examId: number,
     score: number
 }
 

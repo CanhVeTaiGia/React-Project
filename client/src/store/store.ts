@@ -4,6 +4,7 @@ import courseReducer from "./reducers/courseReducer";
 import examSubjectReducer from "./reducers/examSubjectReducer";
 import examReducer from "./reducers/examReducer";
 import questReducer from "./reducers/questReducer";
+import historyReducer from "./reducers/historyReducer";
 
 const store = configureStore({
     reducer: 
@@ -12,7 +13,8 @@ const store = configureStore({
         courses: courseReducer,
         examSubjects: examSubjectReducer,
         exams: examReducer,
-        quests: questReducer
+        quests: questReducer,
+        histories: historyReducer
     }
 })
 export default store;

@@ -27,10 +27,10 @@ export const User: React.FC<Props> = ({ user }) => {
       <tr>
         <td className="p-[10px] bg-white border-y-[1px]">
           {user.image ? (
-            <img className="w-[24px] h-[24px] mr-[10px]" src={user.image} />
+            <img className="w-[24px] inline-block rounded-[50%] h-[24px] mr-[10px]" src={user.image} />
           ) : (
             <FontAwesomeIcon
-              className="text-[24px] mr-[10px]"
+              className="text-[24px] rounded-[50%] mr-[10px]"
               icon={faCircleUser}
             />
           )}{" "}

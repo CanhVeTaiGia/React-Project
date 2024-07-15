@@ -26,3 +26,20 @@ export const updateQuest: any = createAsyncThunk(
         return res.data;
     }
 )
+
+export const deleteQuest: any = createAsyncThunk(
+    'quests/deleteQuest',
+    async (id: number) => {
+        await baseUrl.delete(`quests/${id}`);
+        const res: AxiosResponse = await baseUrl.get('quests');
+        return res.data;
+    }
+)
+
+export const getUserHistory: any = createAsyncThunk(
+    'quests/getUserHistory',
+    async (id: number) => {
+        const res: AxiosResponse = await baseUrl.get(`histories?userId=${id}`);
+        return res.data
+    }
+)

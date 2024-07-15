@@ -21,6 +21,16 @@ const Exam: React.FC<Props> = ({ exam, index, showModal, showDeleteModal }) => {
     return item.id === exam.examSubjectId;
   });
 
+  // const {courses} = useSelector((state: RootType) => {
+  //   return state.courses;
+  // });
+
+  // const courseArr = Array.isArray(courses)? courses : 
+
+  useEffect(() => {
+    dispatch(getAllExamSubject());
+  }, [])
+
   useEffect(() => {
     dispatch(getAllExamSubject());
   }, []);

@@ -4,6 +4,7 @@ import {
   CourseWarning,
   ExamSubjectType,
   ExamType,
+  HistoryType,
   QuestType,
   RootType,
   UserType,
@@ -15,6 +16,7 @@ import {
   addUser,
   changeUserStatus,
   findEmail,
+  getUserById,
 } from "../../services/user.service";
 import { baseUrl } from "../../baseAPI/baseURL";
 import {
@@ -40,6 +42,8 @@ import {
 } from "../../services/exam.service";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import { addQuest, updateQuest } from "../../services/quest.service";
+import { useNavigate } from "react-router-dom";
+import { addHistory } from "../../services/history.service";
 
 interface Props {
   showModal: boolean;
@@ -845,6 +849,7 @@ export const AddAndEditQuest: React.FC<AddAndEditQuestProps> = ({
               value={quest.options && quest ? quest.options[0] || "" : ""}
             />
             <input
+              onChange={handleSetOption}
               name="A"
               value={quest.options && quest ? quest.options[0] || "" : ""}
               placeholder="Câu A"
@@ -866,6 +871,7 @@ export const AddAndEditQuest: React.FC<AddAndEditQuestProps> = ({
               value={quest.options && quest ? quest.options[1] || "" : ""}
             />
             <input
+              onChange={handleSetOption}
               value={quest.options && quest ? quest.options[1] || "" : ""}
               name="B"
               placeholder="Câu b"
@@ -887,6 +893,7 @@ export const AddAndEditQuest: React.FC<AddAndEditQuestProps> = ({
               value={quest.options && quest ? quest.options[2] || "" : ""}
             />
             <input
+              onChange={handleSetOption}
               value={quest.options && quest ? quest.options[2] || "" : ""}
               name="C"
               placeholder="Câu c"
@@ -910,17 +917,16 @@ export const AddAndEditQuest: React.FC<AddAndEditQuestProps> = ({
             <input
               value={quest.options && quest ? quest.options[3] || "" : ""}
               name="D"
+              onChange={handleSetOption}
               placeholder="Câu D"
               className="outline-none p-[10px] rounded-[3px] w-[100%] h-[100%] border-[1px] resize-none"
             />
           </div>
           <div className="w-[100%] flex justify-center mt-[20px] h-[30px]">
-            
             <select
-            onChange={handleChange}
-              value={quest?.examId ? quest.examId : 0}
-              name="exam
-              Id"
+              onChange={handleChange}
+              value={quest.examId ? quest.examId : 0}
+              name="examId"
               className="w-[100%] outline-none rounded-[3px] text-[14px] border-[1px]"
             >
               <option hidden>Đề thi</option>
@@ -939,6 +945,73 @@ export const AddAndEditQuest: React.FC<AddAndEditQuestProps> = ({
             </button>
           </div>
         </form>
+      </div>
+    </>
+  );
+};
+
+interface ResultProps {
+  correctAnswers: { answer: string; status: 0 | 1 }[];
+  filteredQuests: QuestType[];
+  examId: number;
+}
+export const Result: React.FC<ResultProps> = ({
+  filteredQuests,
+  correctAnswers,
+  examId,
+}) => {
+  const correct = correctAnswers.reduce((acc, currentItem) => {
+    return acc + currentItem.status;
+  }, 0);
+  const [userId, setUserId] = useState<number>(() => {
+    const userId = localStorage.getItem("userId");
+    return userId ? Number(JSON.parse(userId)) : 0;
+  });
+  const total = filteredQuests.length;
+  const { users }: any = useSelector((state: RootType) => {
+    return state.users;
+  });
+  const [number, setNumber] = useState<number>(2);
+
+  baseUrl.get(`users?_limit=10_pages=${number}`)
+
+  const score = Math.floor((correct / total) * 10);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSaveScore = () => {
+    const newHistory: HistoryType = {
+      id: 0,
+      userId: userId,
+      examId: examId,
+      score: score,
+    };
+    dispatch(addHistory(newHistory));
+    navigate('/')
+  };
+  useEffect(() => {
+    dispatch(getUserById());
+  }, []);
+  return (
+    <>
+      <div className="absolute w-[100%] top-0 right-0 overflow-hidden flex justify-center items-center h-[100vh]">
+        <div className="w-[500px] rounded-[5px] text-white p-[20px] border-[1px] border-[#f00] bg-[#333]">
+          <div className="w-[100%] flex flex-col items-center py-[20px]">
+            <h1 className="text-[24px]">Điểm số</h1>
+            <h2 className="text-[44px]">{score}</h2>
+            <h2 className="text-[24px]">
+              {correct} / {total} câu
+            </h2>
+            <button
+              // onClick={}
+              className="px-[10px] py-[5px] transition-all duration-300 mt-[20px] border-[1px] rounded-[8px] hover:text-[#f00] hover:border-[#f00]"
+              onClick={handleSaveScore}
+            >
+              Về trang chủ
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );

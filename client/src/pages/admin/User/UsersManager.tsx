@@ -3,7 +3,11 @@ import { UserManagerHeader } from "../../../components/Header/Header";
 import User from "./User";
 import { RootType, UserType } from "../../../interface/interface";
 import { useEffect, useState } from "react";
-import { getAllUser } from "../../../services/user.service";
+import {
+  getAllUser,
+  searchUser,
+  sortUser,
+} from "../../../services/user.service";
 import { AddAndEditUser } from "../../../components/Modal/Modal";
 import { UserManagerFooter } from "../../../components/Footer/Footer";
 
@@ -24,6 +28,8 @@ const UserManager: React.FC = () => {
     setShowModal(!showModal);
   };
 
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const users = Array.isArray(data.users) ? data.users : [data.users];
 
   useEffect(() => {
@@ -36,11 +42,28 @@ const UserManager: React.FC = () => {
     }
   };
 
+  const changeSearchQuery = (searchQuery: string) => {
+    setSearchQuery(searchQuery);
+  };
+
   const paginatedUsers = users.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
 
+  const typeSort = (type: "asc" | "desc") => {
+    setSortOrder(type);
+  };
+
+  useEffect(() => {
+    dispatch(searchUser(searchQuery));
+  }, [searchQuery, dispatch]);
+
+  useEffect(() => {
+    dispatch(
+      sortUser({ order: sortOrder === "asc" ? "asc" : "desc", field: "name" })
+    );
+  }, [sortOrder, dispatch]);
   return (
     <>
       {showModal && (
@@ -53,9 +76,11 @@ const UserManager: React.FC = () => {
       <div className="h-[95vh] flex flex-col justify-between">
         <div>
           <UserManagerHeader
+            changeSearchQuerty={changeSearchQuery}
             showModal={showModal}
             changeModal={changeModal}
             typeShowModal="ADD"
+            typeSort={typeSort}
           />
           <table className="mt-[20px] w-[100%] table-fixed">
             <thead>

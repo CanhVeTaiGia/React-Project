@@ -4,6 +4,7 @@ import { QuestType, RootType } from "../../../interface/interface";
 import { useEffect, useState } from "react";
 import { getAllExam, getExamById } from "../../../services/exam.service";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteQuest } from "../../../services/quest.service";
 
 interface Props {
   quest: QuestType;
@@ -24,6 +25,10 @@ const Quest: React.FC<Props> = ({ quest, index, showAddAndEditModal }) => {
   const handleEdit = () => {
     showAddAndEditModal(quest);
   };
+
+  const handleDelete = () => {
+    dispatch(deleteQuest(quest.id));
+  }
 
   useEffect(() => {
     dispatch(getAllExam());
@@ -65,6 +70,7 @@ const Quest: React.FC<Props> = ({ quest, index, showAddAndEditModal }) => {
             icon={faPenToSquare}
           />
           <FontAwesomeIcon
+          onClick={handleDelete}
             icon={faTrash}
             className="text-[20px] text-[#f00] cursor-pointer"
           />

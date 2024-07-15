@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faArrowRightFromBracket,
+  faArrowRotateLeft,
   faBookOpen,
   faCircleQuestion,
   faCircleUser,
@@ -10,9 +12,10 @@ import {
   faList,
   faRightFromBracket,
   faUser,
+  faUserShield,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
-import { RootType } from "../../interface/interface";
+import { useEffect, useState } from "react";
+import { RootType, UserType } from "../../interface/interface";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminUserById } from "../../services/user.service";
@@ -31,8 +34,6 @@ export const AdminNavbar: React.FC<Props> = ({ id }) => {
   };
   const adminUser = data.adminProfile;
 
-  // console.log(adminUser);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,7 +45,10 @@ export const AdminNavbar: React.FC<Props> = ({ id }) => {
         <div>
           <div className="flex flex-col justify-center items-center pt-[30px]">
             {adminUser && adminUser.image ? (
-              <img className="w-[40px]" src={data.users.image} />
+              <img
+                className="w-[40px] h-[40px] rounded-[50%]"
+                src={adminUser.image}
+              />
             ) : (
               <FontAwesomeIcon className="text-[40px]" icon={faCircleUser} />
             )}
@@ -114,19 +118,97 @@ export const AdminNavbar: React.FC<Props> = ({ id }) => {
   );
 };
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  currentUser: UserType;
+}
+export const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
+  console.log(currentUser);
+  
+  const navigate = useNavigate();
   return (
     <>
       <div className="h-[100%] flex items-center gap-[30px]">
-        <div className="flex cursor-pointer gap-[10px] items-cennter">
+        <div
+          onClick={() => {
+            if (!currentUser) {
+              return navigate("/login");
+            }
+            navigate("/");
+          }}
+          className="flex cursor-pointer hover:text-[#f00] gap-[10px] items-cennter"
+        >
           <FontAwesomeIcon className="text-[16px]" icon={faHome} />
           <p className="text-[16px]">Trang chủ</p>
         </div>
-        <div className="flex cursor-pointer gap-[10px] items-center">
+        <div
+          onClick={() => {
+            if (!currentUser) {
+              return navigate("/login");
+            }
+            navigate("course/:0");
+          }}
+          className="flex hover:text-[#f00] cursor-pointer gap-[10px] items-center"
+        >
           <FontAwesomeIcon className="text-[16px]" icon={faList} />
           <p className="text-[16px]">Khóa thi</p>
         </div>
       </div>
     </>
+  );
+};
+
+export const ProfileNavbar = () => {
+  const [userId, setUserId] = useState<number>(() => {
+    const token = localStorage.getItem("userId");
+    return token ? Number(JSON.parse(token)) : 0;
+  });
+
+  const { users }: any = useSelector((state: RootType) => {
+    return state.users;
+  });
+
+  const handleLogOut = () => {
+    localStorage.removeItem("userId");
+    navigate("/login");
+  };
+
+  const user: UserType | null = Array.isArray(users) ? null : users;
+
+  const navigate = useNavigate();
+  return (
+    <div className="w-[240px] text-[#f00] py-[30px] text-[18px] pl-[20px] border-r-[1px] border-[#444]">
+      <ul>
+        <li
+          onClick={() => navigate("/user/profile")}
+          className="flex items-center gap-[10px] py-[5px] mb-[30px] cursor-pointer rounded-t-[3px] pl-[10px]"
+        >
+          <FontAwesomeIcon icon={faUser} />
+          Tài khoản
+        </li>
+        <li
+          onClick={() => navigate("/user/history")}
+          className="gap-[10px] flex items-center py-[5px] mb-[30px] cursor-pointer rounded-b-[3px] pl-[10px]"
+        >
+          <FontAwesomeIcon icon={faArrowRotateLeft} />
+          Lịch sử bài thi
+        </li>
+        {user?.role === "ADMIN" ? (
+          <li
+            onClick={() => navigate("/admin")}
+            className="gap-[10px] flex items-center py-[5px] mb-[30px] cursor-pointer rounded-b-[3px] pl-[10px]"
+          >
+            <FontAwesomeIcon icon={faUserShield} />
+            Trang quản trị
+          </li>
+        ) : null}
+        <li
+          onClick={handleLogOut}
+          className="gap-[10px] flex items-center py-[5px] cursor-pointer rounded-b-[3px] pl-[10px]"
+        >
+          <FontAwesomeIcon icon={faArrowRightFromBracket} />
+          Đăng xuất
+        </li>
+      </ul>
+    </div>
   );
 };

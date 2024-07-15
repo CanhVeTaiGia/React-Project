@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import bcrypt from 'bcryptjs-react'
 import { baseUrl } from "../baseAPI/baseURL";
 import { UserType } from "../interface/interface";
+import { Axios, AxiosResponse } from "axios";
 
 export const getAllUser: any = createAsyncThunk(
     "users/getAllUser",
@@ -64,6 +65,31 @@ export const getAdminUserById: any = createAsyncThunk(
     "users/getAdminUserById",
     async (id: number) => {
         const response = await baseUrl.get(`users/${id}`);
+        return response.data;
+    }
+)
+
+
+export const sortUser: any = createAsyncThunk(
+    "user/sortUser",
+    async ({ order, field }: { order: string; field: string }) => {
+      const response: AxiosResponse = await baseUrl.get(`users?_sort=${field}&_order=${order}`);
+      return response.data;
+    }
+  );
+
+  export const searchUser: any = createAsyncThunk(
+    'users/searchUser',
+    async (search: string) => {
+        const response: AxiosResponse = await baseUrl.get(`users?name_like=${search}`);
+        return response.data;
+    }
+  );
+
+export const updateUser: any = createAsyncThunk(
+    'users/updateUserById',
+    async (user: UserType) => {
+        const response: AxiosResponse = await baseUrl.put(`users/${user.id}`, user);
         return response.data;
     }
 )

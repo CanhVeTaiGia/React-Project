@@ -16,12 +16,15 @@ const ExamSubject: React.FC<Props> = ({ examSubject, index, setAddOrEdit, showDe
     return state.courses;
   });
 
+  
+
   const dispatch = useDispatch();
 
   const handleDelete = () => {
     showDeleteModal(examSubject.id);
   }
 
+  
   useEffect(() => {
     dispatch(getCourseById(examSubject.courseId));
   }, []);

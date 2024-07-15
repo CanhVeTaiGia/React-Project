@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserType } from "../../interface/interface";
-import { changeUserStatus, findEmail, getAdminUser, getAdminUserById, getAllUser, getUserById } from "../../services/user.service";
+import { addUser, changeUserStatus, findEmail, getAdminUser, getAdminUserById, getAllUser, getUserById, searchUser, sortUser, updateUser,} from "../../services/user.service";
+import { deleteQuest } from "../../services/quest.service";
 
 
 
@@ -36,6 +37,19 @@ const userReducer: any = createSlice({
             .addCase(getAdminUserById.fulfilled, (state, action) => {
                 state.adminProfile = action.payload;
             })
+            .addCase(addUser.fulfilled, (state, action) => {
+                state.users.push(action.payload);
+            })
+            .addCase(sortUser.fulfilled, (state, action) => {
+                state.users = action.payload;
+            })
+            .addCase(searchUser.fulfilled, (state, action) => {
+                state.users = action.payload;
+            })
+            .addCase(updateUser.fulfilled, (state, action) => {
+                state.users = action.payload
+            })
+            
     },
 });
 

@@ -10,6 +10,13 @@ import Home from "./pages/home/Home";
 import ExamManager from "./pages/admin/Exam/ExamManager";
 import QuestManager from "./pages/admin/Quest/QuestManager";
 import Index from "./pages/home/Index";
+import UserProfile from "./pages/userProfile/UserProfile";
+import { Profile } from "./pages/userProfile/Profile";
+import Courses from "./pages/course/Courses";
+import Subjects from "./pages/subjects/Subjects";
+import Exams from "./pages/exam/Exams";
+import Quests from "./pages/quest/Quests";
+import History from "./pages/userProfile/History";
 
 const App: React.FC = () => {
   return (
@@ -24,8 +31,16 @@ const App: React.FC = () => {
           <Route path="exam" element={<ExamManager />}></Route>
           <Route path="quest" element={<QuestManager />}></Route>
         </Route>
-        <Route path="/" element={<Index/>}>
+        <Route path="/" element={<Index />}>
           <Route index element={<Home />}></Route>
+          <Route path="user" element={<UserProfile />}>
+            <Route path="profile" element={<Profile />}></Route>
+            <Route path="history" element={<History />}></Route>
+          </Route>
+          <Route path="course/:id" element={<Courses />}></Route>
+          <Route path='subject/:id' element={<Subjects/>}/>
+          <Route path="exam/:id" element={<Exams/>}></Route>
+          <Route path="quest/:id" element={<Quests/>}></Route>
         </Route>
         <Route path="/*" element={<NotFound />}></Route>
       </Routes>

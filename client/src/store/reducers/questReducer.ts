@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { QuestType } from "../../interface/interface";
-import { addQuest, getAllQuest, updateQuest } from "../../services/quest.service";
+import { addQuest, deleteQuest, getAllQuest, updateQuest } from "../../services/quest.service";
 
 const initialState: QuestType[] = [];
 
@@ -25,11 +25,13 @@ const questReducer: any = createSlice({
     .addCase(updateQuest.fulfilled, (state, action) => {
       const index = state.quests.findIndex((item: QuestType) => item.id === action.payload.id);
       state.quests[index] = action.payload;
-    //  state.quests.map((item) => item.id === action.payload.id? action.payload : item) 
     })
     .addCase(addQuest.fulfilled, (state, action) => {
       state.quests.push(action.payload);
     })
+    .addCase(deleteQuest.fulfilled, (state, action) => {
+      state.quests = [...action.payload];
+  })
   },
 });
 export default questReducer.reducer;

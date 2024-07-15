@@ -8,19 +8,14 @@ const Admin: React.FC = () => {
     if (userId) return JSON.parse(userId);
   });
 
-
   const navigate = useNavigate();
-  // const 
-  
+
   useEffect(() => {
-    if(!currentUserId){
-      navigate('/login')
+    if (!currentUserId) {
+      navigate("/login");
     }
   }, []);
 
-  // useEffect(() => {
-  //   dispatch
-  // })
   return (
     <>
       <div className="w-[100%] bg-[#eee] flex">

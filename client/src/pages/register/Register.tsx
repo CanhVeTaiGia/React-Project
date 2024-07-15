@@ -15,6 +15,8 @@ const Register: React.FC = () => {
     password: false,
   });
 
+  const [emailValidated, setEmailValidated] = useState<boolean>(false);
+
   const [user, setUser] = useState<UserType>({
     id: 0,
     name: "",
@@ -23,6 +25,14 @@ const Register: React.FC = () => {
     password: "",
     role: "USER",
   });
+
+  const validateEmail = (email: string) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
 
   const resetInput = () => {
     return setUser({
@@ -54,6 +64,7 @@ const Register: React.FC = () => {
     if (user.email === "" || user.password === "" || user.name === "") {
       return;
     }
+   
     if (response.data.length > 0) {
       return setIsExisted(true);
     } else {

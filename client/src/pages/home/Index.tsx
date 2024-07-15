@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Header } from "../../components/Header/Header";
-import { RootType } from "../../interface/interface";
+import { RootType, UserType } from "../../interface/interface";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Outlet, useNavigate } from "react-router-dom";
@@ -13,12 +13,20 @@ const Index: React.FC = () => {
     return userId ? parseInt(userId) : 0;
   });
 
-  const { users }: any = useSelector((state: RootType) => {
+  const data: any = useSelector((state: RootType) => {
     return state.users;
   });
 
+  const user = Array.isArray(data.users) ? null : data.users;
+
   const navigate = useNavigate();
   const dispath = useDispatch();
+
+  const checkLogin = () => {
+    if (!userId) {
+      navigate("/login");
+    }
+  };
 
   useEffect(() => {
     if (userId) {
@@ -26,18 +34,11 @@ const Index: React.FC = () => {
     }
   }, []);
 
-  // console.log(users);
-
-  useEffect(() => {
-    if (!userId) {
-      navigate("/login");
-    }
-  }, []);
   return (
     <>
-      <div className="w-[100%] bg-[#222] h-[100vh] overflow-auto">
-        <Header currentUser={users} />
-        <div className="w-[100%] bg-[#222] mb-[20px] h-[100px]"></div>
+      <div className="w-[100%] bg-[#222] h-[100vh] overflow-scroll scrollbar">
+        <Header currentUser={user} />
+        <div className="w-[100%] bg-[#222] mb-[0px] h-[50px]"></div>
         <Outlet />
         <Footer></Footer>
       </div>
