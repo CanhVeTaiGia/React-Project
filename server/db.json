@@ -1,0 +1,418 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Minh Vỹ",
+      "email": "a@gmail.com",
+      "password": "$2a$10$T83..ydh03xDe2MqhICysurznI5RLhttndgAcIgU8.Qy8L7ylcyOW",
+      "role": "ADMIN",
+      "status": true,
+      "image": "https://firebasestorage.googleapis.com/v0/b/project-react-48d03.appspot.com/o/profile%2F364955941_824208739029849_3597532500995225551_n.png?alt=media&token=59926fca-3da5-4cbe-b8bf-c5bbcf64607e"
+    },
+    {
+      "id": 2,
+      "name": "Lương Hà Minh",
+      "email": "b@gmail.com",
+      "password": "$2a$10$zPBh1aaWjuVSbYIQ780NPOI6YM7.WBTUcLEw0VrYMPc0I/L2f6BgS",
+      "role": "ADMIN",
+      "status": true
+    },
+    {
+      "id": 3,
+      "name": "Vũ Thanh Bình",
+      "email": "hung@gmail.com",
+      "password": "$2a$10$81mu6X3rMpRwpb4pfB4i6ellJAC8noTGaiw2FMg0K849LTZGTQ3OS",
+      "role": "ADMIN",
+      "status": true
+    },
+    {
+      "id": 4,
+      "name": "Nguyễn Thế Minh",
+      "email": "c@gmail.com",
+      "status": true,
+      "password": "$2a$10$i0H/APcLAWiw1J2Xv9Z9OuFFfejK3iGEorwnsiVcPzweLN2I.vsqK",
+      "role": "USER",
+      "image": "https://firebasestorage.googleapis.com/v0/b/project-react-48d03.appspot.com/o/profile%2F395754773_727796366031537_115740026397364945_n.jpg?alt=media&token=0633f14e-a561-4082-ba4d-91306d0a341c"
+    },
+    {
+      "id": 5,
+      "name": "Lê Diên Tiến",
+      "email": "ax`@gmail.com",
+      "status": true,
+      "password": "$2a$10$GUhRT8mFGbpW2eLkev/EZeLepKtZ5V3oJqWSiUSxNKFbnT8a.H8eq",
+      "role": "USER",
+      "image": "https://firebasestorage.googleapis.com/v0/b/project-react-48d03.appspot.com/o/profile%2F85ea9235-52f8-4bac-817d-adc148bb707f.png?alt=media&token=ec9cab90-99c8-4593-b829-b472d34d1272"
+    }
+  ],
+  "courses": [
+    {
+      "id": 1,
+      "title": "Khóa học dành cho học sinh lớp 12",
+      "description": "Khóa học cung cấp kiến thức cơ bản và nâng cao về Toán học cho học sinh lớp 12 trường trung học phổ thông."
+    },
+    {
+      "id": 2,
+      "title": "Khóa học dành cho học sinh lớp 11",
+      "description": "Khóa học giúp học sinh lớp 11 trường trung học phổ thông phát triển kỹ năng viết và đọc hiểu Văn học."
+    },
+    {
+      "id": 3,
+      "title": "Khóa học dành cho học sinh lớp 10",
+      "description": "Khóa học tập trung vào việc cải thiện kỹ năng giao tiếp bằng tiếng Anh cho học sinh lớp 10 trường trung học phổ thông."
+    },
+    {
+      "id": 4,
+      "title": "Khóa học dành cho học sinh chuẩn bị cho thi tốt nghiệp THPT",
+      "description": "Khóa học cung cấp kiến thức thực nghiệm về Vật lý cho học sinh chuẩn bị cho kỳ thi tốt nghiệp THPT."
+    },
+    {
+      "id": 5,
+      "title": "Khóa học dành cho học sinh chuẩn bị cho thi học sinh giỏi",
+      "description": "Khóa học giúp học sinh lớp 12 trường trung học phổ thông nắm vững kiến thức cơ bản về Hóa học."
+    }
+  ],
+  "examSubjects": [
+    {
+      "id": 1,
+      "title": "Toán học",
+      "description": "Nghiên cứu về các số học, đại lượng và hình học.",
+      "courseId": 1
+    },
+    {
+      "id": 2,
+      "title": "Văn học",
+      "description": "Nghiên cứu về các văn học.",
+      "courseId": 2
+    },
+    {
+      "id": 3,
+      "title": "Lý học",
+      "description": "Nghiên cứu về các nguyên lý và quy luật của tự nhiên.",
+      "courseId": 3
+    },
+    {
+      "id": 4,
+      "title": "Hóa học",
+      "description": "Nghiên cứu về các chất và các phản ứng hóa học.",
+      "courseId": 5
+    },
+    {
+      "id": 5,
+      "title": "Địa lý",
+      "description": "Nghiên cứu về địa chất và các khu vực trên thế giới.",
+      "courseId": 5
+    },
+    {
+      "id": 6,
+      "title": "Tiếng Anh",
+      "description": "Nghiên cứu về ngôn ngữ phổ thông của thế giới.",
+      "courseId": 5
+    },
+    {
+      "id": 7,
+      "title": "Sinh học",
+      "description": "Nghiên cứu về các sinh vật sống và các quá trình sinh học.",
+      "courseId": 5
+    },
+    {
+      "id": 8,
+      "title": "Môn Ngữ Văn",
+      "description": "Môn Ngữ Văn dành cho học sinh lớp 11",
+      "courseId": "2"
+    },
+    {
+      "id": 9,
+      "title": "Môn Hóa ",
+      "description": "Môn hóa dành cho thi học sinh giỏi",
+      "courseId": "5"
+    }
+  ],
+  "exams": [
+    {
+      "id": 1,
+      "title": "Kỳ thi tốt nghiệp THPT Toán học",
+      "description": "Kỳ thi cuối cấp bao gồm toàn bộ chương trình Toán học.",
+      "duration": 180,
+      "examSubjectId": 1
+    },
+    {
+      "id": 2,
+      "title": "Kỳ thi tốt nghiệp THPT Văn học",
+      "description": "Kỳ thi cuối cấp bao gồm toàn bộ chương trình Văn học.",
+      "duration": 180,
+      "examSubjectId": 2
+    },
+    {
+      "id": 3,
+      "title": "Kỳ thi tốt nghiệp THPT Lý học",
+      "description": "Kỳ thi cuối cấp bao gồm toàn bộ chương trình Lý học.",
+      "duration": 180,
+      "examSubjectId": 3
+    },
+    {
+      "id": 4,
+      "title": "Kỳ thi tốt nghiệp THPT Hóa học",
+      "description": "Kỳ thi cuối cấp bao gồm toàn bộ chương trình Hóa học.",
+      "duration": 180,
+      "examSubjectId": 4
+    },
+    {
+      "id": 5,
+      "title": "Kỳ thi tốt nghiệp THPT Địa lý",
+      "description": "Kỳ thi cuối cấp bao gồm toàn bộ chương trình Địa lý.",
+      "duration": 180,
+      "examSubjectId": 5
+    },
+    {
+      "id": 6,
+      "title": "Kỳ thi tốt nghiệp THPT Tiếng Anh",
+      "description": "Kỳ thi cuối cấp bao gồm toàn bộ chương trình Tiếng Anh.",
+      "duration": 180,
+      "examSubjectId": 6
+    },
+    {
+      "id": 7,
+      "title": "Kỳ thi tốt nghiệp THPT Sinh học",
+      "description": "Kỳ thi cuối cấp bao gồm toàn bộ chương trình Sinh học.",
+      "duration": 180,
+      "examSubjectId": 7
+    },
+    {
+      "id": 8,
+      "title": "Đợt kiểm tra giữa kỳ Toán học",
+      "description": "Đợt kiểm tra giữa kỳ dành cho môn Toán học.",
+      "duration": 90,
+      "examSubjectId": 1
+    },
+    {
+      "id": 9,
+      "title": "Đợt kiểm tra giữa kỳ Văn học",
+      "description": "Đợt kiểm tra giữa kỳ dành cho môn Văn học.",
+      "duration": 90,
+      "examSubjectId": 2
+    },
+    {
+      "id": 10,
+      "title": "Đợt kiểm tra giữa kỳ Lý học",
+      "description": "Đợt kiểm tra giữa kỳ dành cho môn Lý học.",
+      "duration": 90,
+      "examSubjectId": 3
+    },
+    {
+      "id": 11,
+      "title": "Đợt kiểm tra giữa kỳ Hóa học",
+      "description": "Đợt kiểm tra giữa kỳ dành cho môn Hóa học.",
+      "duration": 90,
+      "examSubjectId": 4
+    },
+    {
+      "id": 12,
+      "title": "Đợt kiểm tra giữa kỳ Địa lý",
+      "description": "Đợt kiểm tra giữa kỳ dành cho môn Địa lý.",
+      "duration": 90,
+      "examSubjectId": 5
+    },
+    {
+      "id": 13,
+      "title": "Đợt kiểm tra giữa kỳ Tiếng Anh",
+      "description": "Đợt kiểm tra giữa kỳ dành cho môn Tiếng Anh.",
+      "duration": 90,
+      "examSubjectId": 6
+    },
+    {
+      "id": 14,
+      "title": "Đợt kiểm tra giữa kỳ Sinh học",
+      "description": "Đợt kiểm tra giữa kỳ dành cho môn Sinh học.",
+      "duration": 90,
+      "examSubjectId": 7
+    },
+    {
+      "examSubjectId": 2,
+      "title": "Đề thi Ngữ Văn cho thi tốt nghiệp THPT 2024",
+      "description": "Thi tốt nghiệp",
+      "duration": "90",
+      "id": 15
+    }
+  ],
+  "quests": [
+    {
+      "id": 1,
+      "question": "Công thức tính diện tích của tam giác là gì?",
+      "examId": 1,
+      "options": [
+        "A = 1/2 * cơ sở * chiều cao",
+        "A = cơ sở * chiều cao",
+        "A = π * bán kính^2",
+        "A = 2 * π * bán kính"
+      ],
+      "answer": "A = 1/2 * cơ sở * chiều cao",
+      "examSubjectId": 1
+    },
+    {
+      "id": 3,
+      "question": "Bao nhiêu là giá trị của π (pi)?",
+      "examId": 1,
+      "options": [
+        "3.14",
+        "2.71",
+        "1.618",
+        "4.669"
+      ],
+      "answer": "3.14",
+      "examSubjectId": 1
+    },
+    {
+      "id": 6,
+      "question": "Định lý Pythagore phát biểu như thế nào?",
+      "examId": 1,
+      "options": [
+        "a^2 + b^2 = c^2",
+        "a + b = c",
+        "a^2 - b^2 = c^2",
+        "a^2 + b = c^2"
+      ],
+      "answer": "a^2 + b^2 = c^2",
+      "examSubjectId": 1
+    },
+    {
+      "id": 7,
+      "question": "Công thức tính chu vi hình tròn là gì?",
+      "examId": 1,
+      "options": [
+        "C = 2πr",
+        "C = πr^2",
+        "C = 2πr^2",
+        "C = πd"
+      ],
+      "answer": "C = 2πr",
+      "examSubjectId": 1
+    },
+    {
+      "id": 8,
+      "question": "Hệ số góc của đường thẳng y = mx + b là gì?",
+      "examId": 1,
+      "options": [
+        "m",
+        "x",
+        "b",
+        "y"
+      ],
+      "answer": "m",
+      "examSubjectId": 1
+    },
+    {
+      "id": 2,
+      "question": "Trong các tùy chọn sau, đâu là ví dụ về nguồn năng lượng tái tạo?",
+      "examId": 2,
+      "options": [
+        "Than đá",
+        "Khí tự nhiên",
+        "Năng lượng mặt trời",
+        "Dầu"
+      ],
+      "answer": "Năng lượng mặt trời",
+      "examSubjectId": 2
+    },
+    {
+      "id": 9,
+      "question": "Tác phẩm 'Truyện Kiều' được viết bởi ai?",
+      "examId": 2,
+      "options": [
+        "Nguyễn Trãi",
+        "Nguyễn Du",
+        "Phan Bội Châu",
+        "Hồ Xuân Hương"
+      ],
+      "answer": "Nguyễn Du",
+      "examSubjectId": 2
+    },
+    {
+      "id": 10,
+      "question": "Ai là tác giả của bài thơ 'Sóng'?",
+      "examId": 2,
+      "options": [
+        "Xuân Quỳnh",
+        "Hữu Thỉnh",
+        "Nguyễn Duy",
+        "Huy Cận"
+      ],
+      "answer": "Xuân Quỳnh",
+      "examSubjectId": 2
+    },
+    {
+      "id": 11,
+      "question": "Truyện ngắn 'Chí Phèo' là tác phẩm của ai?",
+      "examId": 2,
+      "options": [
+        "Nam Cao",
+        "Ngô Tất Tố",
+        "Tô Hoài",
+        "Nguyễn Công Hoan"
+      ],
+      "answer": "Nam Cao",
+      "examSubjectId": 2
+    },
+    {
+      "examId": 1,
+      "question": "1 + 1",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": "2",
+      "id": 12
+    },
+    {
+      "question": "15 + 7",
+      "options": [
+        "21",
+        "22",
+        "23",
+        "24"
+      ],
+      "answer": "22",
+      "examId": 1,
+      "id": 13
+    }
+  ],
+  "histories": [
+    {
+      "id": 1,
+      "userId": 4,
+      "examId": 1,
+      "score": 4
+    },
+    {
+      "id": 2,
+      "userId": 4,
+      "examId": 1,
+      "score": 0
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "examId": 1,
+      "score": 1.4285714285714284
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "examId": 1,
+      "score": 0
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "examId": 1,
+      "score": 5
+    },
+    {
+      "id": 6,
+      "userId": 1,
+      "examId": 1,
+      "score": 2
+    }
+  ]
+}
